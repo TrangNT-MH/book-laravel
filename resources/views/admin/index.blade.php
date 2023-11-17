@@ -1,14 +1,16 @@
 <div>
-    @foreach($searchUser as $value)
-        <table>
-            <thead>
+    <table>
+        <thead>
 
-            </thead>
-            <tbody>
+        </thead>
+        <tbody>
+        @foreach($allUser as $key => $value)
             <tr>
-                <td></td>
+                <td>{{$key++}}</td>
+                <td>{{$value['name']}}</td>
+                <td>{{$value['email']}}</td>
             </tr>
-            </tbody>
-        </table>
-    @endforeach
+        @endforeach
+        </tbody>
+    </table>
 </div>

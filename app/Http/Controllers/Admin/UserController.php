@@ -27,8 +27,7 @@ class UserController extends Controller
         $userModel = new User();
         $key = $request->get('key');
         $searchUser = $userModel->find($key);
-        dd($searchUser);
 
-        return view('admin.index', compact('searchUser'));
+        return view('admin.search', compact('searchUser'));
     }
 }

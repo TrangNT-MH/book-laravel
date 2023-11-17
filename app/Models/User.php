@@ -45,12 +45,21 @@ class User extends Authenticatable
     ];
 
     // Query Builder
+
+    /**
+     * @param $id
+     * @return \Illuminate\Support\Collection
+     */
     public function detail($id)
     {
         return DB::table('users')
             ->where('id', $id)->get();
     }
 
+    /**
+     * @param $key
+     * @return \Illuminate\Database\Query\Builder|mixed
+     */
     public function find($key)
     {
         return DB::table('users')
