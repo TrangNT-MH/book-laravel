@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 //use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\User\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +19,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/admin/dashboard', function () {
-//    return view('layout.master');
-//});
+Route::get('/register', [LoginRegisterController::class, 'register'])->name('register');
+Route::controller(LoginRegisterController::class)->group(function () {
+    Route::get('/register', 'register')->name('register');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/login', 'login')->name('login');
+});
+
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index');
     Route::prefix('/book')->group(function () {

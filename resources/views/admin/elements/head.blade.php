@@ -18,6 +18,6 @@
 <!-- Layout styles -->
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
 <!-- End layout styles -->
-<link rel="stylesheet" href="{{asset('storage/images/favicon.png')}}">
+<link rel="stylesheet" href="{{asset('images/favicon.png')}}">
 <title>@yield('title')</title>
 @yield('style')

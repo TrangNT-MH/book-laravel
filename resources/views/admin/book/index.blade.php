@@ -33,16 +33,19 @@
                         <tbody>
                         @foreach($allBooks as $key => $value)
                             <tr>
-                                <td>{{ $key++ }}</td>
-                                <td>
-                                    <div class="book-title">{{ $value['tile'] }}</div>
-                                    <div class="book-author">{{ $value['author'] }}</div>
+                                <td>{{ ++$key }}</td>
+                                <td class="d-flex flex-column">
+                                    <div class="book-title my-2">{{ $value['title'] }}</div>
+                                    <div class="book-author text-gray">{{ $value['author'] }}</div>
                                 </td>
                                 <td>{{ $value['price'] }}</td>
                                 <td>{{ $value['publication_date'] }}</td>
-{{--                                <td class="text-danger"> 28.76% <i class="icon-arrow-down-circle"></i></td>--}}
                                 <td>
-                                    <label class="badge badge-danger">Pending</label>
+                                    @if($value['status'] === 1)
+                                        <label class="badge badge-success">Active</label>
+                                    @else
+                                        <label class="badge badge-danger">Inactive</label>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

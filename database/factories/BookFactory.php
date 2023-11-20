@@ -26,9 +26,10 @@ class BookFactory extends Factory
 //        $image = str_replace('public/storage/', '', $imagePath);
 
         $image = 'https://picsum.photos/'. rand(2,200);
+        $title = $this->faker->sentence(3, true);
 
         return [
-            'title' => fake()->title(),
+            'title' => $title,
             'isbn10' => fake()->unique()->isbn10(),
             'author' => fake()->name(),
             'price' => fake()->randomFloat(2,0, 99999),

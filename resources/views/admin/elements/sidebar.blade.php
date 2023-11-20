@@ -4,7 +4,7 @@
             <li class="nav-item nav-profile">
                 <a href="#" class="nav-link">
                     <div class="profile-image">
-                        <img class="img-xs rounded-circle" src="{{asset('storage/images/faces/face8.jpg')}}"
+                        <img class="img-xs rounded-circle" src="{{asset('images/faces/face8.jpg')}}"
                              alt="profile image">
                         <div class="dot-indicator bg-success"></div>
                     </div>
@@ -29,29 +29,29 @@
             </li>
             <li class="nav-item nav-category"><span class="nav-link">UI Elements</span></li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" role="button" aria-expanded="false"
                    aria-controls="ui-basic">
                     <span class="menu-title">Basic UI Elements</span>
                     <i class="icon-layers menu-icon"></i>
                 </a>
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
+                        <li class="nav-item"><a class="nav-link" href="">Buttons</a>
                         </li>
                         <li class="nav-item"><a class="nav-link"
-                                                href="pages/ui-features/typography.html">Typography</a></li>
+                                                href="">Typography</a></li>
                     </ul>
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/icons/simple-line-icons.html">
-                    <span class="menu-title">Icons</span>
+                <a class="nav-link" href="{{ route('admin.book.index') }}">
+                    <span class="menu-title">Book List</span>
                     <i class="icon-globe menu-icon"></i>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/forms/basic_elements.html">
-                    <span class="menu-title">Form Elements</span>
+                <a class="nav-link" href="{{ route('admin.book.create') }}">
+                    <span class="menu-title">Add Book</span>
                     <i class="icon-book-open menu-icon"></i>
                 </a>
             </li>

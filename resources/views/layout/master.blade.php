@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="">
 <head>
     @include('admin.elements.head')
 </head>
@@ -16,6 +16,6 @@
     </div>
 </div>
 @include('admin.elements.script')
-@yield('script')
+@stack('script')
 </body>
 </html>
