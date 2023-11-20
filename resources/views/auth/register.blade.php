@@ -18,8 +18,8 @@
                         <form class="pt-3" method="post" action="{{ route('store') }}">
                             @csrf
                             <div class="form-group">
-                                <input type="text" name="username" class="form-control form-control-lg" id="username"
-                                       placeholder="Username">
+                                <input type="text" name="name" class="form-control form-control-lg" id="name"
+                                           placeholder="Full Name">
                             </div>
                             <div class="form-group">
                                 <input type="email" name="email" class="form-control form-control-lg" id="email"
