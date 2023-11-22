@@ -1,4 +1,7 @@
 @extends('layout.master')
+@push('style')
+    <link rel="stylesheet" href="{{ asset('css/liveSearch.css') }}">
+@endpush
 @section('content')
     <div class="page-header">
         <h3 class="page-title"> Tables </h3>
@@ -17,9 +20,20 @@
                         <h4 class="card-title m-0 mr-2">Books</h4>
                         <a href="{{ route('admin.book.create') }}" class="icon-plus btn-add-book border-0 bg-transparent m-0" style="color: indianred"></a>
                     </div>
-                    <form class="search-form d-md-block w-50" action="#">
-                        <input type="search" class="form-control" placeholder="Search Here" title="Search here">
-                    </form>
+                    <div class="search-bar d-flex justify-content-between">
+                        <form class="search-form w-50">
+                            <input type="text" name="key" class="form-control search-book" placeholder="Search Title, Author or ISBN10" title="search" autocomplete="off">
+                            <span id="bookList"></span>
+                        </form>
+                        <div class="bool-filter">
+                            <select name="limit" id="limit">
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -34,8 +48,8 @@
                         @foreach($allBooks as $key => $value)
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td class="d-flex flex-column">
-                                    <div class="book-title my-2">{{ $value['title'] }}</div>
+                                <td>
+                                    <div class="book-title my-2" style="white-space: break-spaces !important; min-width: 160px;">{{ $value['title'] }}</div>
                                     <div class="book-author text-gray">{{ $value['author'] }}</div>
                                 </td>
                                 <td>{{ $value['price'] }}</td>
@@ -56,3 +70,43 @@
         </div>
     </div>
 @endsection
+@push('script')
+    <script>
+        $(document).ready(function () {
+            $('.search-book').on("keyup", function (e) {
+                let key = $(this).val();
+                console.log(key);
+
+                if(key === '') {
+                    $('#bookList').html('');
+                } else {
+                    $.ajax({
+                        type: 'get',
+                        url: '{{ route('admin.book.search') }}',
+                        data: {
+                            'key': key
+                        },
+                        success:function(data){
+                            $('#bookList').html(data);
+                        }
+                    });
+                }
+
+                if(e.keyCode === 13) {
+                    window.location.assign('/admin/book/search?key=' + key);
+                }
+
+                $('body').on('click', function (event) {
+                        $('#bookList').html('');
+                });
+
+                $('#bookList').on('click', 'li', function(){
+                    var value = $(this).data('book-id');
+
+
+                });
+                $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+            })
+        })
+    </script>
+@endpush

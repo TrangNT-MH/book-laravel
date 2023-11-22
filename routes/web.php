@@ -23,16 +23,19 @@ Route::controller(LoginRegisterController::class)->group(function () {
     Route::get('/register', 'register')->name('register');
     Route::post('/store', 'store')->name('store');
     Route::get('/login', 'login')->name('login');
+    Route::post('/login', 'authenticate')->name('authenticate');
+    Route::get('/logout', 'logout')->name('logout');
 });
 
 Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::prefix('/book')->group(function () {
         Route::get('/index', [BookController::class, 'index'])->name('admin.book.index');
         Route::get('/store', [BookController::class, 'create'])->name('admin.book.create');
         Route::post('/store', [BookController::class, 'store'])->name('admin.book.store');
         Route::get('/edit/{id}', [BookController::class, 'edit'])->name('admin.book.edit');
         Route::put('/edit/{id}', [BookController::class, 'update'])->name('admin.book.update');
+        Route::get('/search', [BookController::class, 'search'])->name('admin.book.search');
     });
    Route::get('/index', [UserController::class, 'index'])->name('admin.index');
    Route::get('/detail/{id}', [UserController::class, 'detail'])->name('admin.detail');

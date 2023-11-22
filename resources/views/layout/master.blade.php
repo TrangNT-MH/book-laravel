@@ -2,6 +2,7 @@
 <html lang="">
 <head>
     @include('admin.elements.head')
+    @stack('style')
 </head>
 <body>
 <div class="container-scroller">

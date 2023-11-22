@@ -81,7 +81,6 @@
 @push('script')
     <script>
         selectImg.onchange = evt => {
-            console.log(111)
             preview = document.getElementById('image-preview');
             fileName = document.getElementById('file-upload-name')
             preview.style.display = 'block';
