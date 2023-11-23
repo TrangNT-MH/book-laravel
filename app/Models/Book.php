@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
+use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class Book extends Model
 {
@@ -22,25 +23,15 @@ class Book extends Model
         'image'
     ];
 
-    public function books() : HasMany
-    {
-        return $this->hasMany(Book::class);
-    }
-
     public function insert($data)
     {
         return DB::table('books')->insert($data);
     }
 
-    public function search($keys)
+    public function detail($id)
     {
-        $keys = explode(' ', $keys);
-        return $this->books()::whereHas('keys', function (Builder $query) use($keys)
-        {
-            foreach ($keys as $key)
-            {
-                $query->orWhere('title', 'like', '%' . $key . '%');
-            }
-        })->get();
+        return DB::table('books')
+            ->where('id', $id)
+            ->first();
     }
 }

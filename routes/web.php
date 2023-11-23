@@ -35,7 +35,8 @@ Route::prefix('admin')->group(function () {
         Route::post('/store', [BookController::class, 'store'])->name('admin.book.store');
         Route::get('/edit/{id}', [BookController::class, 'edit'])->name('admin.book.edit');
         Route::put('/edit/{id}', [BookController::class, 'update'])->name('admin.book.update');
-        Route::get('/search', [BookController::class, 'search'])->name('admin.book.search');
+        Route::post('/index', [BookController::class, 'index']);
+        Route::get('/detail/{id}', [BookController::class, 'detail'])->name('admin.book.detail');
     });
    Route::get('/index', [UserController::class, 'index'])->name('admin.index');
    Route::get('/detail/{id}', [UserController::class, 'detail'])->name('admin.detail');

@@ -21,9 +21,43 @@ class BookController extends Controller
         $this->bookModel = new Book();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $allBooks = Book::all();
+        $keys = $request->get('key');
+        $perPage = $request->get('limit', 5);
+
+        if ($keys === null) {
+            $allBooks = Book::paginate($perPage);
+        } else {
+            if (!is_array($keys)) {
+                $keys = explode(' ', $keys);
+            }
+
+            $allBooks = Book::where(function (Builder $query) use ($keys) {
+                foreach ($keys as $key) {
+                    $query->orWhere('title', 'like', '%' . $key . '%');
+                }
+            })->paginate($perPage);
+        }
+
+        if ($request->ajax()) {
+            $output = '';
+            if (count($allBooks) > 0) {
+                $output = '<ul class="list-group-item-info">';
+                foreach ($allBooks as $row) {
+                    $output .= '<li class="list-group-item" data-book-id="' . $row->id . '">' .
+                        '<div class="book-title">Title: <span class="text-gray font-italic">' . $row->title . '</div></span>' .
+                        '<div class="book-author">Author: <span class="text-gray font-italic">' . $row->author . '</div></span>' .
+                        '<div class="book-isbn10">ISBN10: <span class="text-gray font-italic">' . $row->isbn10 . '</div></span>' .
+                        '</li>';
+                }
+                $output .= '</ul>';
+            } else {
+                $output .= '<li class="list-group-item">' . 'No results' . '</li>';
+            }
+            return $output;
+        }
+
         return view('admin.book.index', compact('allBooks'));
     }
 
@@ -57,37 +91,10 @@ class BookController extends Controller
         }
     }
 
-    public function search(Request $request)
+    public function detail(Request $request)
     {
-        $keys = $request->get('key');
-        if (!is_array($keys)) {
-            $keys = explode(' ', $keys);
-        }
-
-        $allBooks = Book::where(function (Builder $query) use ($keys) {
-            foreach ($keys as $key) {
-                $query->orWhere('title', 'like', '%' . $key . '%');
-            }
-        })->get();
-
-        if ($request->ajax()) {
-            $output = '';
-            if (count($allBooks) > 0) {
-                $output = '<ul class="list-group-item-info">';
-                foreach ($allBooks as $row) {
-                    $output .= '<li class="list-group-item" data-book-id="' . $row->id . '">' .
-                        '<div class="book-title">Title: <span class="text-gray font-italic">' . $row->title . '</div></span>' .
-                        '<div class="book-author">Author: <span class="text-gray font-italic">' . $row->author . '</div></span>' .
-                        '<div class="book-isbn10">ISBN10: <span class="text-gray font-italic">' . $row->isbn10 . '</div></span>' .
-                                '</li>';
-                }
-                $output .= '</ul>';
-            } else {
-                $output .= '<li class="list-group-item">' . 'No results' . '</li>';
-            }
-            return $output;
-        }
-
-        return view('admin.book.index', compact('allBooks'));
+        $id = $request->id;
+        $selectBook = $this->bookModel->detail($id);
+        return view('admin.book.detail', compact('selectBook'));
     }
 }

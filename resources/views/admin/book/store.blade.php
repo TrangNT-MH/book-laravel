@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Adding book form</h4>
-                <form action="" method="post" class="forms-add-book" enctype="multipart/form-data">
+                <form action="" method="post" class="forms-add-book" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     <div class="form-group">
                         <label for="book-title">Title</label>
@@ -72,7 +72,7 @@
 
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button class="btn btn-light" onclick="window.history.go(-1); return false;">Cancel</button>
                 </form>
             </div>
         </div>
