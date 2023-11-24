@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use Illuminate\Container\RewindableGenerator;
 use Illuminate\Database\Eloquent\Builder;
@@ -96,5 +97,28 @@ class BookController extends Controller
         $id = $request->id;
         $selectBook = $this->bookModel->detail($id);
         return view('admin.book.detail', compact('selectBook'));
+    }
+
+    public function update(UpdateBookRequest $request)
+    {
+        $id = $request->id;
+        $validatedData = $request->validated();
+        dd($validatedData);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $id = $request->id;
+        $currentStatus = (int)$request->status;
+
+        if ($currentStatus == 1) {
+            $newStatus = 2;
+        } else {
+            $newStatus = 1;
+        }
+        $this->bookModel->where('id', $id)
+                        ->update(['status' => $newStatus]);
+
+        return redirect('admin/book/detail/' . $id);
     }
 }

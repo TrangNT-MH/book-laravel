@@ -34,9 +34,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/store', [BookController::class, 'create'])->name('admin.book.create');
         Route::post('/store', [BookController::class, 'store'])->name('admin.book.store');
         Route::get('/edit/{id}', [BookController::class, 'edit'])->name('admin.book.edit');
-        Route::put('/edit/{id}', [BookController::class, 'update'])->name('admin.book.update');
         Route::post('/index', [BookController::class, 'index']);
         Route::get('/detail/{id}', [BookController::class, 'detail'])->name('admin.book.detail');
+        Route::post('/detail/{id}', [BookController::class, 'update'])->name('admin.book.update');
+        Route::put('/update-status/{id}/{status}', [BookController::class, 'updateStatus'])->name('admin.book.status');
     });
    Route::get('/index', [UserController::class, 'index'])->name('admin.index');
    Route::get('/detail/{id}', [UserController::class, 'detail'])->name('admin.detail');

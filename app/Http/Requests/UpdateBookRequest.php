@@ -3,10 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use \Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
-class AddBookRequest extends FormRequest
+class UpdateBookRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +24,7 @@ class AddBookRequest extends FormRequest
     {
         return [
             'title' => 'bail|required|string',
-            'isbn10' => 'bail|required|unique:books|regex:/([0-9X]{10}$)/',
+            'isbn10' => 'bail|required|regex:/([0-9X]{10}$)/|unique:books,isbn10,'. $this->id,
             'author' => 'bail|required|string',
             'price' => 'bail|required|decimal:2',
             'publication_date' => 'bail|required',
