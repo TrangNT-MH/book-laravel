@@ -1,34 +1,53 @@
 @extends('layout.master')
 @push('style')
-
+    <link rel="stylesheet" href="{{ asset('css/bookDetail.css') }}">
 @endpush
 @section('content')
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
-            <div class="card-body d-flex flex-row">
-                <div class="col-4 book-image">
-                    <img src="{{ asset('storage/' . $selectBook->image) }}" alt="" style="max-width: 200px;">
-                </div>
-                <div class="col-3 title">
-                    <div>Title: </div>
-                    <div>Author: </div>
-                    <div>ISBN10: </div>
-                    <div>Publication Date: </div>
-                    <div>Price: </div>
-                    <div>Status: </div>
-                </div>
-                <div class="col-8 book-detail">
-                    <div class="book-detail-title text-capitalize">{{ $selectBook->title }}</div>
-                    <div class="book-detail-author text-capitalize">{{ $selectBook->author }}</div>
-                    <div class="book-detail-isbn10">{{ $selectBook->isbn10 }}</div>
-                    <div class="book-detail-publication-date">Publication Date: {{ $selectBook->publication_date }}</div>
-                    <div class="book-detail-price">{{ $selectBook->price }}</div>
-                    <div class="book-detail-status">
-                        @if($selectBook->status == 1)
-                            <label class="badge badge-success">Active</label>
-                        @else
-                            <label class="badge badge-warning">Inactive</label>
-                        @endif
+            <div class="card-body">
+                <div class="container">
+                    <div class="row book-grid-row style-4 m-b60">
+                        <div class="col">
+                            <div class="book-detail-box d-flex flex-row">
+                                <div class="book-detail-media mr-5">
+                                    <img src="{{ asset('storage/' . $selectBook->image) }}" alt="book"
+                                         style="max-width: 400px;">
+                                </div>
+                                <div class="book-detail-content">
+                                    <div class="book-detail-header">
+                                        <h3 class="title font-weight-bolder display-2">{{ $selectBook->title }}</h3>
+                                    </div>
+                                    <div class="book-detail-body">
+                                        <div class="book-detail">
+                                            <ul class="book-info">
+                                                <li>
+                                                    <div class="writer-info">
+                                                        <span>Writen by</span>{{ $selectBook->author }}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="publication-date">
+                                                        <span>Publication Date</span>{{ $selectBook->publication_date }}
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="book-footer">
+                                            <div class="price">
+                                                <h5>${{ $selectBook->price }}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-8">
+
+                        </div>
                     </div>
                 </div>
             </div>

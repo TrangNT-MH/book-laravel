@@ -1,0 +1,12 @@
+.book-detail-body ul {
+    display: flex;
+    flex-direction: row;
+}
+.book-detail-body ul li {
+    list-style: none;
+}
+
+.book-detail-body ul li div {
+    display: flex;
+    flex-direction: column;
+}
