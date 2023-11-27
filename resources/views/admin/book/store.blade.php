@@ -79,17 +79,5 @@
     </div>
 @endsection
 @push('script')
-    <script>
-        selectImg.onchange = evt => {
-            preview = document.getElementById('image-preview');
-            fileName = document.getElementById('file-upload-name')
-            preview.style.display = 'block';
-            const [file] = selectImg.files
-
-            if (file) {
-                preview.src = URL.createObjectURL(file)
-                fileName.placeholder=file['name']
-            }
-        }
-    </script>
+    <script src="{{ asset('js/preview-img.js') }}"></script>
 @endpush

@@ -34,4 +34,8 @@ class Book extends Model
             ->where('id', $id)
             ->first();
     }
+
+    public function update(array $attributes = [], array $options = [])
+    {
+    }
 }

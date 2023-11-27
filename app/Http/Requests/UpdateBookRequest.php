@@ -28,7 +28,7 @@ class UpdateBookRequest extends FormRequest
             'author' => 'bail|required|string',
             'price' => 'bail|required|decimal:2',
             'publication_date' => 'bail|required',
-            'image' => 'bail|required|image'
+            'image' => 'bail|sometimes|required|image'
         ];
     }
 
