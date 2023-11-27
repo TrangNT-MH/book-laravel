@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\Admin\BookController;
+use App\Http\Controllers\API\Admin\UserController;
+use App\Http\Controllers\API\Auth\LoginRegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +19,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/admin', function (Request $request) {
     return $request->user();
+});
+
+Route::middleware(['api'])->group(function() {
+    Route::post('/login', [LoginRegisterController::class, 'login']);
+    Route::post('/register', [LoginRegisterController::class, 'register']);
+    Route::post('/logout', [LoginRegisterController::class, 'logout']);
+    Route::post('/profile', [LoginRegisterController::class,'profile']);
+
+    Route::prefix('admin')->group(function () {
+        Route::get('/user', [UserController::class, 'index']);
+        Route::get('/book', [BookController::class, 'index']);
+    });
 });

@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
-use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -44,8 +44,6 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // Query Builder
-
     /**
      * @param $id
      * @return \Illuminate\Support\Collection
@@ -53,7 +51,8 @@ class User extends Authenticatable
     public function detail($id)
     {
         return DB::table('users')
-            ->where('id', $id)->get();
+            ->where('id', $id)
+            ->get();
     }
 
     /**
@@ -64,6 +63,16 @@ class User extends Authenticatable
     {
         return DB::table('users')
             ->find($key);
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+            return [];
     }
 }
 

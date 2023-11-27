@@ -35,7 +35,9 @@ class Book extends Model
             ->first();
     }
 
-    public function update(array $attributes = [], array $options = [])
+    public function list()
     {
+        return DB::table('books')
+            ->paginate(5);
     }
 }
