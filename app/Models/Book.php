@@ -38,6 +38,7 @@ class Book extends Model
     public function list()
     {
         return DB::table('books')
-            ->paginate(5);
+            ->paginate(5)
+            ->appends(request()->query());
     }
 }

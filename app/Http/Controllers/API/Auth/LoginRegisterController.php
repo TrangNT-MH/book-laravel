@@ -30,7 +30,10 @@ class LoginRegisterController extends Controller
         $user = Auth::user();
         return response()->json([
             'user' => $user,
-            'token' => $token
+            'auth' => [
+                'token' => $token,
+                'type' => 'bearer'
+            ]
         ]);
     }
 

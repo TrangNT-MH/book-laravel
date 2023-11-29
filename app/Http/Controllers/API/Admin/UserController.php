@@ -12,7 +12,6 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->get('limit');
         $users = User::all();
         return new UserCollection($users);
     }
