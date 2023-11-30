@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\Book;
-use Database\Factories\BookFactory;
+use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class BookSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Book::factory(10)->create();
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'user']);
     }
 }
