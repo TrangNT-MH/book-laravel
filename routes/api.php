@@ -33,10 +33,9 @@ Route::middleware(['api'])->group(function () {
             Route::get('/', [BookController::class, 'index']);
             Route::get('/store', [BookController::class, 'create']);
             Route::post('/store', [BookController::class, 'store']);
-//            Route::post('/index', [BookController::class, 'index']);
             Route::get('/detail/{id}', [BookController::class, 'detail']);
             Route::put('/detail/{id}', [BookController::class, 'edit']);
-//            Route::put('/update-status/{id}/{status}', [BookController::class, 'updateStatus']);
+            Route::put('/update-status/{id}/{status}', [BookController::class, 'updateStatus']);
         });
 
     });

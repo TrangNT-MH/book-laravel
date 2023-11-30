@@ -2,42 +2,19 @@
 
 namespace App\Http\Controllers\API\Admin;
 
+use App\Filters\BookFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Http\Resources\BookCollection;
 use App\Http\Resources\BookResource;
 use App\Models\Book;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Tymon\JWTAuth\Claims\Collection;
 
 class BookController extends Controller
 {
-//    protected Book $bookModel;
-//    public function __construct()
-//    {
-//        $this->bookModel = new Book();
-//    }
-//
-//    public function index()
-//    {
-////        $book = Book::all()->paginate();
-//        return BookResource::collection(Book::paginate());
-//
-//    }
-//
-//    public function store(AddBookRequest $request)
-//    {
-//        $validator = $request->validated();
-//        $book  = Book::create($validator);
-//
-//        return $this->wrapResponse(Response::HTTP_OK, 'Success', $book);
-//    }
-
     private Book $bookModel;
 
     public function __construct()
@@ -45,33 +22,13 @@ class BookController extends Controller
         $this->bookModel = new Book();
     }
 
-    public function index(Request $request)
+    public function index(BookFilter $filter)
     {
-        $status = $request->get('is_active');
-        $keys = $request->get('key');
-        $perPage = $request->get('limit', 5);
+        $perPage = request()->get('limit', 5);
 
-        $query = Book::query();
+        $allBooks = Book::filter($filter)->paginate($perPage);
 
-        if ($status == 1) {
-            $query->where('status', '1');
-        }
-
-        if ($keys) {
-            if (!is_array($keys)) {
-                $keys = explode(' ', $keys);
-            }
-
-            $query->where(function ($query) use ($keys) {
-                foreach ($keys as $key) {
-                    $query->orWhere('title', 'like', '%' . $key . '%');
-                }
-            });
-        }
-
-        $allBooks = $query->paginate($perPage);
-
-        return BookResource::collection($allBooks);
+        return new BookCollection($allBooks);
     }
 
     public function create()
@@ -127,9 +84,10 @@ class BookController extends Controller
         return new BookResource($selectBook);
     }
 
-    public function destroy($id)
+    public function updateStatus(Request $request)
     {
-        $selectBook = $this->bookModel->find($id);
+        $selectBook = Book::findOrFail($request->id);
+        $currentStatus = (int)$request->status;
 
         if (!$selectBook) {
             return response()->json([
@@ -137,12 +95,34 @@ class BookController extends Controller
             ], 404);
         }
 
-        Storage::delete($selectBook->image);
-        $selectBook->delete();
+        $action = 'deactivated';
+
+        if ($currentStatus == 1) {
+            $newStatus = 2;
+        } else {
+            $newStatus = 1;
+            $action = 'activated';
+        }
+        $this->bookModel->where('id', $request->id)
+            ->update(['status' => $newStatus]);
 
         return response()->json([
-            'message' => 'Book deleted successfully'
+            'message' => 'Book was ' . $action . ' successfully',
+            'data' => new BookResource($selectBook)
         ]);
+    }
+
+    public function getImage($image)
+    {
+        $path = public_path('storage/images/books');
+        if (!file_exists($path)) {
+            File::makeDirectory($path, '777', true);
+        }
+
+        $imageStoreName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('/storage/images/books/'), $imageStoreName);
+
+        return 'images/books/' . $imageStoreName;
     }
 
 }

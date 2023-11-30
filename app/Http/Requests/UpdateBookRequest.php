@@ -35,17 +35,17 @@ class UpdateBookRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.required' => 'The title field is required for the book title.',
-            'title.string' => 'The title must be a string for the book title.',
-            'isbn10.required' => 'The isbn10 field is required for the ISBN-10.',
-            'isbn10.unique' => 'The isbn10 must be unique for the ISBN-10.',
-            'isbn10.regex' => 'The isbn10 must be a valid ISBN-10 format (containing 10 digits or "X").',
-            'author.required' => "The author field is required for the author's name.",
-            'author.string' => "The author must be a string for the author\'s name.",
-            'price.required' => 'The price field is required for the book price.',
-            'price.decimal' => 'The price must be a decimal number with 2 digits for the book price.',
-            'publication_date.required' => 'The publication date field is required for the book publication date .',
-            'image.image' => 'The image must be an image file.',
+                'title.required' => 'The title field is required for the book title.',
+                'title.string' => 'The title must be a string for the book title.',
+                'isbn10.required' => 'The isbn10 field is required for the ISBN-10.',
+                'isbn10.unique' => 'The isbn10 must be unique for the ISBN-10.',
+                'isbn10.regex' => 'The isbn10 must be a valid ISBN-10 format (containing 10 digits or "X").',
+                'author.required' => "The author field is required for the author's name.",
+                'author.string' => "The author must be a string for the author\'s name.",
+                'price.required' => 'The price field is required for the book price.',
+                'price.decimal' => 'The price must be a decimal number with 2 digits for the book price.',
+                'publication_date.required' => 'The publication date field is required for the book publication date .',
+                'image.image' => 'The image must be an image file.',
         ];
     }
 }

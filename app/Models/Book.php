@@ -23,6 +23,11 @@ class Book extends Model
         'image'
     ];
 
+    public function scopeFilter($query, $filter)
+    {
+        return $filter->apply($query);
+    }
+
     public function insert($data)
     {
         return DB::table('books')->insert($data);
