@@ -7,7 +7,7 @@
         <a class="navbar-brand brand-logo-mini" href=""><img src="{{ asset('images/logo-mini.svg')}}" alt="logo"/></a>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center flex-grow-1">
-        <h5 class="mb-0 font-weight-medium d-none d-lg-flex">Welcome stallar dashboard!</h5>
+        <h5 class="mb-0 font-weight-medium d-none d-lg-flex">Welcome stellar dashboard!</h5>
         <ul class="navbar-nav navbar-nav-right ml-auto">
             <form class="search-form d-none d-md-block" action="#">
                 <i class="icon-magnifier"></i>
@@ -51,7 +51,7 @@
                             <img src="{{ asset('images/faces/face1.jpg') }}" alt="image" class="img-sm profile-pic">
                         </div>
                         <div class="preview-item-content flex-grow py-2">
-                            <p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
+                            <p class="preview-subject ellipsis font-weight-medium text-dark"></p>
                             <p class="font-weight-light small-text"> The meeting is cancelled </p>
                         </div>
                     </a>

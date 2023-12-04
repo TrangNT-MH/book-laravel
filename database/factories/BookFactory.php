@@ -25,7 +25,7 @@ class BookFactory extends Factory
 //        $imagePath = fake()->image('public/storage/images/books');
 //        $image = str_replace('public/storage/', '', $imagePath);
 
-        $image = 'https://picsum.photos/'. rand(2,200);
+//        $image = 'https://picsum.photos/'. rand(2,200);
         $title = $this->faker->sentence(3, true);
 
         return [
@@ -34,7 +34,7 @@ class BookFactory extends Factory
             'author' => fake()->name(),
             'price' => fake()->randomFloat(2,0, 99999),
             'publication_date' => fake()->date(),
-            'image' => $image
+            'image' => fake()->image('images/books/')
         ];
     }
 }
