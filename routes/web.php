@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BookController as AdminBookController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
+
 //use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\User\BookController as UserBookController;
@@ -19,31 +20,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(LoginRegisterController::class)->group(function () {
-    Route::get('/register', 'register')->name('register');
-    Route::post('/store', 'store')->name('store');
-    Route::get('/login', 'login')->name('login');
-    Route::post('/login', 'authenticate')->name('authenticate');
-    Route::get('/logout', 'logout')->name('logout');
-});
+Route::get('/register', [LoginRegisterController::class, 'register'])->name('register');
+Route::post('/store', [LoginRegisterController::class, 'store'])->name('store');
+Route::get('/login', [LoginRegisterController::class, 'login'])->name('login');
+Route::post('/login', [LoginRegisterController::class, 'authenticate'])->name('authenticate');
+Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('logout');
 
-Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::prefix('/book')->group(function () {
-        Route::get('/index', [AdminBookController::class, 'index'])->name('admin.book.index');
-        Route::get('/store', [AdminBookController::class, 'create'])->name('admin.book.create');
-        Route::post('/store', [AdminBookController::class, 'store'])->name('admin.book.store');
-        Route::post('/index', [AdminBookController::class, 'index']);
-        Route::get('/detail/{id}', [AdminBookController::class, 'detail'])->name('admin.book.detail');
-        Route::put('/detail/{id}', [AdminBookController::class, 'edit'])->name('admin.book.edit');
-        Route::put('/update-status/{id}/{status}', [AdminBookController::class, 'updateStatus'])->name('admin.book.status');
+Route::middleware(['auth', 'roles:admin'])->group(function () {
+    Route::prefix('/admin')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+        Route::prefix('/book')->group(function () {
+            Route::get('/index', [AdminBookController::class, 'index'])
+                ->name('admin.book.index')->middleware('can:viewAny, book');
+            Route::get('/store', [AdminBookController::class, 'create'])
+                ->name('admin.book.create')->middleware('can:create, book');
+            Route::post('/store', [AdminBookController::class, 'store'])
+                ->name('admin.book.store')->middleware('can:create, book');
+            Route::post('/index', [AdminBookController::class, 'index']);
+            Route::get('/detail/{id}', [AdminBookController::class, 'detail'])->name('admin.book.detail');
+            Route::put('/detail/{id}', [AdminBookController::class, 'edit'])->name('admin.book.edit');
+            Route::put('/update-status/{id}/{status}', [AdminBookController::class, 'updateStatus'])->name('admin.book.status');
+        });
+        Route::get('/index', [UserController::class, 'index'])->name('admin.index');
+        Route::get('/detail/{id}', [UserController::class, 'detail'])->name('admin.detail');
+        Route::get('/search', [UserController::class, 'search'])->name('admin.search');
     });
-   Route::get('/index', [UserController::class, 'index'])->name('admin.index');
-   Route::get('/detail/{id}', [UserController::class, 'detail'])->name('admin.detail');
-   Route::get('/search', [UserController::class, 'search'])->name('admin.search');
 });
-
 
 Route::get('/', [UserBookController::class, 'index'])->name('user.book.index');
-Route::prefix('user')->group(function () {
+Route::middleware(['auth', 'roles:user'])->group(function () {
+    Route::prefix('/user')->group(function () {
+    });
 });
+

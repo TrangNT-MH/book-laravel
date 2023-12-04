@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasPermission;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -11,7 +12,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasPermission;
 
     /**
      * The attributes that are mass assignable.
@@ -46,13 +47,13 @@ class User extends Authenticatable implements JWTSubject
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class, 'users_roles');
     }
 
-    public function permissions()
-    {
-        return $this->belongsToMany(Permission::class);
-    }
+//    public function permissions()
+//    {
+//        return $this->belongsToMany(Permission::class, );
+//    }
 
     /**
      * @param $id

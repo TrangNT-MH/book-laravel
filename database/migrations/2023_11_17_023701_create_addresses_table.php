@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('street_address');
             $table->string('address');
             $table->string('city');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

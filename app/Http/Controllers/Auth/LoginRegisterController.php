@@ -44,7 +44,12 @@ class LoginRegisterController extends Controller
         $credentials = $request->validated();
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('admin.dashboard');
+            $user = Auth::user();
+            if ($user->hasRole('admin')) {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->hasRole('user')) {
+                return redirect()->route('user.book.index');
+            }
         }
         return back()->withErrors(['fail_login' => 'Your provided credentials do not match in our records'])->onlyInput('email');
     }
