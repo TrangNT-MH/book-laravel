@@ -14,16 +14,18 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->string('book_id')->unique();
+            $table->string('isbn')->unique();
             $table->string('title');
             $table->string('authors');
-            $table->decimal('original_price', 10, 2);
-            $table->decimal('current_price', 10, 2);
-            $table->integer('quantity');
-            $table->string('category');
-            $table->integer('n_review');
             $table->decimal('avg_rating', 3, 1);
-            $table->integer('pages');
+            $table->integer('n_review');
+            $table->decimal('price');
+            $table->longText('description');
+            $table->string('publisher');
+            $table->string('category');
+            $table->integer('page_count');
+            $table->date('publish_date')->default('2023-03-05');
+            $table->string('language');
             $table->timestamps();
         });
     }

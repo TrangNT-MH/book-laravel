@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
@@ -23,10 +21,7 @@ class PermissionSeeder extends Seeder
             'book-list',
             'book-create',
             'book-edit',
-            'book-deactivate'
-        ];
-
-        $userPermissions = [
+            'book-deactivate',
             'book-list',
             'book-detail',
             'add-book-to-cart',
@@ -35,10 +30,6 @@ class PermissionSeeder extends Seeder
         ];
 
         foreach ($adminPermissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
-        }
-
-        foreach ($userPermissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
         }
     }

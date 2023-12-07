@@ -15,13 +15,12 @@ class UserSeeder extends Seeder
     {
         $user = User::create([
             'name' => 'Trang Ha',
-            'email' => 'trangha12@gmail.com',
+            'email' => 'trangha123@admin.com',
             'email_verified_at' => now(),
             'password' => Hash::make('12345678'),
             'remember_token' => '',
         ]);
 
-        $user->assignRole('user');
-
+        $user->assignRole('admin');
     }
 }

@@ -6,12 +6,11 @@
 </head>
 <body>
 <div class="container-scroller">
-    @include('admin.elements.navbar')
+    @include('user.elements.navbar')
     <div class="container-fluid page-body-wrapper">
-{{--        @include('user.elements.sidebar')--}}
-            <div class="content-wrapper">
-                @yield('content')
-            </div>
+        <div class="content-wrapper">
+            @yield('content')
+        </div>
     </div>
 </div>
 @include('admin.elements.script')

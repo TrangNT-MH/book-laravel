@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class LoginRegisterController extends Controller
@@ -20,17 +21,21 @@ class LoginRegisterController extends Controller
 
     public function store(RegisterRequest $request)
     {
-        $validatedData = $request->validated();
-        User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password'])
-        ]);
+        DB::transaction(function () use ($request) {
+            $user = User::create([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password'])
+            ]);
 
-        $credentials = $request->only('email', 'password');
-        Auth::attempt($credentials);
-        $request->session()->regenerate();
-        return redirect()->intended('admin/dashboard')
+            $credentials = $request->only('email', 'password');
+            Auth::attempt($credentials);
+            $request->session()->regenerate();
+
+            $user->assignRole('user');
+        });
+
+        return redirect()->intended('/')
             ->withSuccess('You have successfully registered & logged in!');
     }
 
@@ -47,7 +52,7 @@ class LoginRegisterController extends Controller
             if (Auth::user()->hasRole('admin')) {
                 return redirect()->intended('admin/dashboard');
             }
-            return redirect()->intended('/');
+            return redirect()->intended('/book');
         }
         return back()->withErrors(['fail_login' => 'Your provided credentials do not match in our records'])->onlyInput('email');
     }

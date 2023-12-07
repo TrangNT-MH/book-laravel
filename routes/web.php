@@ -3,7 +3,6 @@
 use App\Http\Controllers\Admin\BookController as AdminBookController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
-//use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\User\BookController as UserBookController;
 use Illuminate\Support\Facades\Route;
@@ -19,15 +18,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(LoginRegisterController::class)->group(function () {
-    Route::get('/register', 'register')->name('register');
-    Route::post('/store', 'store')->name('store');
-    Route::get('/', 'login')->name('login');
-    Route::post('/login', 'authenticate')->name('authenticate');
-    Route::get('/logout', 'logout')->name('logout');
-});
+Route::get('/register', [LoginRegisterController::class, 'register'])->name('register');
+Route::post('/store', [LoginRegisterController::class, 'store'])->name('store');
+Route::get('/', [LoginRegisterController::class, 'login'])->name('login');
+Route::post('/login', [LoginRegisterController::class, 'authenticate'])->name('authenticate');
+Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('logout');
 
-Route::group(['middleware' => ['role:admin']], function (){
+Route::group(['middleware' => ['role:admin']], function () {
     Route::prefix('admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
         Route::prefix('/book')->group(function () {
