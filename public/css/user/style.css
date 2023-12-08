@@ -83,8 +83,12 @@
 
 .btn-add-to-cart {
     background-color: #1b8dbf;
-    padding: 10px;
+    padding: 8px;
     border-radius: 50%;
     color: #ffffff;
     align-items: center;
+}
+
+.btn-add-to-cart:hover {
+    background-color: #1bdbe0;
 }

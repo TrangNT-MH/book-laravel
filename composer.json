@@ -12,7 +12,8 @@
         "laravel/tinker": "^2.8",
         "laravelcollective/html": "^6.4",
         "spatie/laravel-permission": "^6.1",
-        "tymon/jwt-auth": "^2.0"
+        "tymon/jwt-auth": "^2.0",
+        "bumbummen99/shoppingcart": "dev-laravel10"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -65,5 +66,12 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/phobrv/LaravelShoppingcart.git",
+            "no-api": true
+        }
+    ]
 }
