@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Book extends Model implements Buyable
+class Book extends Model
 {
     use HasFactory;
 
@@ -44,26 +44,26 @@ class Book extends Model implements Buyable
             ->appends(request()->query());
     }
 
-    public function getBuyableIdentifier($options = null)
-    {
-        // TODO: Implement getBuyableIdentifier() method.
-        return $this->id;
-    }
-
-    public function getBuyableDescription($options = null)
-    {
-        // TODO: Implement getBuyableDescription() method.
-        return $this->description;
-    }
-
-    public function getBuyablePrice($options = null)
-    {
-        // TODO: Implement getBuyablePrice() method.
-        return $this->price;
-    }
-
-    public function getBuyableWeight($options = null)
-    {
-        // TODO: Implement getBuyableWeight() method.
-    }
+//    public function getBuyableIdentifier($options = null)
+//    {
+//        // TODO: Implement getBuyableIdentifier() method.
+//        return $this->id;
+//    }
+//
+//    public function getBuyableDescription($options = null)
+//    {
+//        // TODO: Implement getBuyableDescription() method.
+//        return $this->description;
+//    }
+//
+//    public function getBuyablePrice($options = null)
+//    {
+//        // TODO: Implement getBuyablePrice() method.
+//        return $this->price;
+//    }
+//
+//    public function getBuyableWeight($options = null)
+//    {
+//        // TODO: Implement getBuyableWeight() method.
+//    }
 }

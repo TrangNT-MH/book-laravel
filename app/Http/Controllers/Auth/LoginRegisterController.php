@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
@@ -53,6 +54,30 @@ class LoginRegisterController extends Controller
             if (Auth::user()->hasRole('admin')) {
                 return redirect()->intended('admin/dashboard');
             }
+
+            $storedCart = DB::table('shoppingcart')->where([
+                'identifier' => Auth::user()->getAuthIdentifier(),
+                'instance' => 'cart'
+            ])->value('content');
+
+            $storedCart = unserialize($storedCart);
+
+            if ($storedCart) {
+                foreach ($storedCart as $item) {
+                    Cart::instance('cart')->add([
+                        'id' => $item->id,
+                        'name' => $item->name,
+                        'qty' => $item->qty,
+                        'price' => $item->price,
+                        'weight' => 0,
+                        'options' => [
+                            'author' => $item->options['author'],
+                            'image' => $item->options['image']
+                        ]
+                    ]);
+                }
+            }
+
             return redirect()->intended('/book');
         }
         return back()->withErrors(['fail_login' => 'Your provided credentials do not match in our records'])->onlyInput('email');
