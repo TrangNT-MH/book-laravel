@@ -13,7 +13,7 @@
                 <i class="icon-magnifier"></i>
                 <input type="search" class="form-control" placeholder="Search Here" title="Search here">
             </form>
-            <li class="nav-item"><a href="{{ route('user.book.cart') }}" class="nav-link"><i class="icon-basket-loaded"></i></a></li>
+            <li class="nav-item"><a href="{{ route('user.cart') }}" class="nav-link"><i class="icon-basket-loaded"></i></a></li>
             <li class="nav-item"><a href="#" class="nav-link"><i class="icon-chart"></i></a></li>
             <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
                 <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown"

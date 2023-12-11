@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\User\BookController as UserBookController;
+use App\Http\Controllers\User\CartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +47,8 @@ Route::group(['middleware' => ['role:admin']], function () {
 Route::group(['middleware' => ['role:user|admin']], function () {
     Route::get('/book', [UserBookController::class, 'index'])->name('user.book.index');
     Route::get('/book/{id}', [UserBookController::class, 'addToCart'])->name('user.book.addToCart');
-    Route::get('/book/cart', [UserBookController::class, 'cart'])->name('user.book.cart');
+    Route::get('/book/detail/{id}', [UserBookController::class, 'detail'])->name('user.book.detail');
+    Route::get('/cart', [CartController::class, 'index'])->name('user.cart');
+    Route::delete('/cart/delete/${id}', [CartController::class, 'delete'])->name('user.cart.delete');
 });
 

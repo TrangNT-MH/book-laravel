@@ -2,6 +2,7 @@
 <html lang="">
 <head>
     <title></title>@include('admin.elements.head')
+    <link rel="stylesheet" href="{{ asset('css/user/style.css') }}">
     @stack('style')
 </head>
 <body>

@@ -2,15 +2,12 @@
 
 namespace App\Models;
 
+use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Builder;
-use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class Book extends Model
+class Book extends Model implements Buyable
 {
     use HasFactory;
 
@@ -45,5 +42,28 @@ class Book extends Model
         return DB::table('books')
             ->paginate(5)
             ->appends(request()->query());
+    }
+
+    public function getBuyableIdentifier($options = null)
+    {
+        // TODO: Implement getBuyableIdentifier() method.
+        return $this->id;
+    }
+
+    public function getBuyableDescription($options = null)
+    {
+        // TODO: Implement getBuyableDescription() method.
+        return $this->description;
+    }
+
+    public function getBuyablePrice($options = null)
+    {
+        // TODO: Implement getBuyablePrice() method.
+        return $this->price;
+    }
+
+    public function getBuyableWeight($options = null)
+    {
+        // TODO: Implement getBuyableWeight() method.
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -65,6 +66,8 @@ class LoginRegisterController extends Controller
      */
     public function logout(Request $request)
     {
+        Cart::instance('cart')->restore(Auth::user()->getAuthIdentifier());
+        Cart::instance('cart')->store(Auth::user()->getAuthIdentifier());
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

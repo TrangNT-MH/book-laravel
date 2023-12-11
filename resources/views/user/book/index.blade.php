@@ -1,6 +1,8 @@
 @extends('layout.main')
 @push('style')
-    <link rel="stylesheet" href="{{ asset('css/user/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 @endpush
 @section('content')
     <div class="head-title d-flex justify-content-between">
@@ -20,9 +22,9 @@
                     <img src="{{ asset('storage/' . $book->image) }} ">
                 </div>
                 <div class="book-short-detail">
-                    <div class="book-title">
+                    <a class="book-title" href="{{ route('user.book.detail', [$book->id]) }}">
                         {{ $book->title }}
-                    </div>
+                    </a>
                     <div class="book-authors">
                         {{ $book->authors }}
                     </div>
@@ -49,16 +51,23 @@
             $('#limit').on('change', function () {
                 let limit = $('#limit').find(":selected").val();
                 window.location.href = `/book?limit=${limit}`
-            })
+            });
 
+            $.ajaxSetup({headers: {'csrftoken': '{{ csrf_token() }}'}});
             $('.btn-add-to-cart').on('click', function () {
                 let id = $(this).data('book-id')
                 console.log(id)
                 $.ajax({
                     type: 'GET',
-                    url: `book/${id}`,
+                    url: `/book/${id}`,
+                    success: function (response) {
+                        toastr.options = {
+                            "closeButton" : true,
+                            "positionClass": "toast-bottom-right"
+                        }
+                        toastr.success(response.message)
+                    }
                 })
-                $.ajaxSetup({headers: {'csrftoken': '{{ csrf_token() }}'}});
             })
         })
     </script>

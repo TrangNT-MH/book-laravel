@@ -5,37 +5,42 @@ namespace App\Http\Controllers\User;
 use App\Filters\BookFilter;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
-use Gloudemans\Shoppingcart\Cart;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
-use function PHPUnit\Framework\containsIdentical;
 
 class BookController extends Controller
 {
-    function index(BookFilter $filter)
+    public function index(BookFilter $filter)
     {
-        $perPage  = request()->get('limit', 20);
+        $perPage  = request()->get('limit', 10);
         $books = Book::filter($filter)->paginate($perPage);
         return view('user.book.index', compact('books'));
     }
 
-    function addToCart(Request $request)
+    public function addToCart(Request $request, $id)
     {
         if ($request->ajax()) {
-            $id = $request->get('id');
-            dd($id);
+            $book = Book::findOrFail($id);
+            Cart::instance('cart')->add([
+                'id' => $id,
+                'name' => $book->title,
+                'qty' => 1,
+                'price' => $book->price,
+                'weight' => 0,
+                'options' => [
+                    'author' => $book->authors,
+                    'image' => $book->image
+                ]
+            ]);
+            return response()->json([
+                'message' => 'Add to cart successfully'
+            ]);
         }
-//        $book = Book::find($id);
-//        Cart::add([
-//            'id' => $id,
-//            'title' => $book->title,
-//            'authors' => $book->authors,
-//            'price' => $book->price
-//        ]);
     }
 
-    function cart()
+    public function detail($id)
     {
-        $cart = Cart::content();
-        return view('user.book.cart', compact('cart'));
+        $book = Book::find($id);
+        return view('user.book.detail', compact('book'));
     }
 }
