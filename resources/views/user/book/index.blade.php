@@ -65,7 +65,9 @@
                             "closeButton" : true,
                             "positionClass": "toast-bottom-right"
                         }
-                        toastr.success(response.message)
+                        toastr.success(response.message);
+                        var count = @json(Cart::instance('cart')->content()->count());
+                        $('#cart-badge').text(count);
                     }
                 })
             })

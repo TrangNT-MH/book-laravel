@@ -13,18 +13,27 @@
                 <i class="icon-magnifier"></i>
                 <input type="search" class="form-control" placeholder="Search Here" title="Search here">
             </form>
-            <li class="nav-item"><a href="{{ route('user.cart') }}" class="nav-link"><i class="icon-basket-loaded"></i></a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="icon-chart"></i></a></li>
+            <li class="nav-item">
+                <a href="{{ route('user.cart') }}" class="nav-link">
+                    <i class="icon-basket-loaded"></i>
+                    <span id="cart-badge" class="badge badge-danger">{{ Cart::instance('cart')->content()->count() }}</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="icon-chart"></i>
+                </a>
+            </li>
             <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
                 <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown"
                    aria-expanded="false">
                     <img class="img-xs rounded-circle ml-2" src="{{ asset('images/faces/face8.jpg') }}" alt="Profile image"> <span
-                        class="font-weight-normal"> Henry Klein </span></a>
+                        class="font-weight-normal"> {{ auth()->user()->name }} </span></a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                     <div class="dropdown-header text-center">
                         <img class="img-md rounded-circle" src="{{ asset('images/faces/face8.jpg') }}" alt="Profile image">
                         <p class="mb-1 mt-3">Allen Moreno</p>
-                        <p class="font-weight-light text-muted mb-0">allenmoreno@gmail.com</p>
+                        <p class="font-weight-light text-muted mb-0">{{ auth()->user()->email }}</p>
                     </div>
                     <a class="dropdown-item"><i class="dropdown-item-icon icon-user text-primary"></i> My Profile <span
                             class="badge badge-pill badge-danger">1</span></a>
