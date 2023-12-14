@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('books', function (Blueprint $table) {
-            $table->string('image')->default(0)->after('language');
+        Schema::table('addresses', function (Blueprint $table) {
+            $table->tinyInteger('is_default')->after('city');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('books', function($table) {
-            $table->dropColumn('image');
+        Schema::table('addresses', function($table) {
+            $table->dropColumn('is_default');
         });
     }
 };

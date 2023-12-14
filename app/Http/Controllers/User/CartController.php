@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\User;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,7 @@ class CartController extends Controller
     {
         $this->addressModel = new Address();
     }
+
     public function index()
     {
         $cart = Cart::instance('cart')->content();
@@ -38,8 +40,7 @@ class CartController extends Controller
     {
         $cart = Cart::instance('cart')->content();
         $id = Auth::user()->getAuthIdentifier();
-        $address = $this->addressModel->find($id);
-        dd($address);
-        return view('user.cart.checkout', compact('cart', 'address'));
+        $addresses = User::find($id)->addresses->toArray();
+        return view('user.cart.checkout', compact('cart', 'addresses'));
     }
 }

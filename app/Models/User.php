@@ -46,6 +46,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
+
     /**
      * @param $id
      * @return \Illuminate\Support\Collection
@@ -61,11 +66,11 @@ class User extends Authenticatable
      * @param $key
      * @return \Illuminate\Database\Query\Builder|mixed
      */
-    public function find($key)
-    {
-        return DB::table('users')
-            ->find($key);
-    }
+//    public function find($key)
+//    {
+//        return DB::table('users')
+//            ->find($key);
+//    }
 
 //    public function getJWTIdentifier()
 //    {

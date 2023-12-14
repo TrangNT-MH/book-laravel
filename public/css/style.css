@@ -6855,11 +6855,13 @@ a.close.disabled {
   flex-direction: column;
   width: 100%;
   pointer-events: auto;
-  background-color: #ecf0f4;
+  background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #e8ecf1;
+  box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
   border-radius: 0.3rem;
-  outline: 0; }
+  outline: 0;
+}
 
 .modal-backdrop {
   position: fixed;
@@ -6870,7 +6872,7 @@ a.close.disabled {
   height: 100vh;
   background-color: #000; }
   .modal-backdrop.fade {
-    opacity: 0; }
+    opacity: 0.5; }
   .modal-backdrop.show {
     opacity: 0.5; }
 

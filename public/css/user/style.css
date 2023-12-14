@@ -255,3 +255,70 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
     height: fit-content;
 }
+
+.cart-checkout-wrapper .checkout-address .change-address {
+    text-transform: uppercase;
+    font-family: 'Montserrat', 'sans-serif';
+    font-size: 12px;
+    padding: 5px 10px;
+}
+
+.modal button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.modal button:hover {
+    color: #617FFF;
+}
+
+.modal .choose-address {
+    padding: 0 15px ;
+}
+
+.modal .box-address {
+    display : block;
+}
+
+.modal .box-address .gold-members {
+    width: 430px;
+}
+
+.modal .box-address .edit-delete {
+    display: flex;
+}
+
+.modal .box-address .edit-delete button {
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+}
+
+.modal .box-address .edit-delete .btn-edit-address {
+    color: #617FFF;
+    margin-right: 20px;
+}
+
+.modal .box-address .edit-delete .btn-delete-address {
+    color: crimson;
+}
+
+.modal .box-address .edit-delete .btn-delete-address:disabled {
+    color: #4e4e4e;
+}
+
+.box-address > input{
+    visibility: hidden;
+    position: absolute;
+}
+
+.box-address > input + div{
+    cursor:pointer;
+    border:1px solid transparent;
+}
+
+.box-address > input:checked + div{
+    border: 1px solid #ff6600;
+    border-radius: 2px;
+}

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('street_number');
             $table->string('street_address');
-            $table->string('address');
+            $table->string('district');
             $table->string('city');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
