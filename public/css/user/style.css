@@ -144,3 +144,114 @@
     background: lightgray;
     border: none;
 }
+
+#cart-dropdown-items {
+    background-color: #fff;
+    width: 300px;
+    transform: translateY(200px);
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+}
+
+.book-title-preview {
+    font-weight: 600;
+    font-size: 12px;
+    font-family: 'Montserrat', 'sans-serif';
+    color: #1b8dbf;
+    float: left;
+    line-height: 1.5;
+    width: 100px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/*Book detail*/
+.book-detail-content {
+    gap: 20px;
+}
+
+.image-frame {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    padding: 10px;
+    height: fit-content;
+}
+
+.book-overview-box {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+}
+
+.book-detail {
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    height: fit-content;
+}
+
+.add-to-cart {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    height: fit-content;
+}
+
+.add-to-cart #quantity {
+    text-align: center;
+    border: none;
+}
+
+/*Cart checkout*/
+.box-cart-checkout {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    height: fit-content;
+    margin-bottom: 50px;
+}
+
+.cart-checkout-wrapper {
+    gap: 20px;
+}
+
+.cart-checkout-wrapper table {
+    max-width:100%;
+    white-space:nowrap;
+}
+
+.cart-checkout-wrapper table tr td img {
+    border-radius: 0;
+    width: 100px;
+    height: auto;
+}
+
+.cart-checkout-wrapper table tr td .cart-checkout-title {
+    white-space: initial;
+    font-weight: 600;
+    font-size: 15px;
+    font-family: 'Montserrat', 'sans-serif';
+    color: #1b8dbf;
+    float: left;
+    line-height: 1.5;
+}
+
+.cart-checkout-wrapper table tr td .cart-checkout-authors {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.cart-checkout-wrapper table tr td .cart-checkout-price {
+    color: #ef7aa7;
+}
+
+.cart-checkout-wrapper .checkout-address {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    height: fit-content;
+}

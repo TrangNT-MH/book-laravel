@@ -30,11 +30,11 @@
                     </div>
                     <div class="book-rating d-flex align-items-center">
                         <div class="stars" style="--rating: {{ $book->avg_rating }}"></div>
-                        <div class="n-reviews">{{ $book->n_review }}</div>
+                        <div class="n-reviews">{{ $book->number_of_review }}</div>
                     </div>
                     <div class="book-price d-flex justify-content-between align-items-center my-2">
                         <span>{{ $book->price }} $</span>
-                        <div class="add-to-cart">
+                        <div class="button-add-to-cart">
                             <button type="button" class="btn btn-add-to-cart" data-book-id="{{ $book->id }}"><i class="icon-basket-loaded"></i>
                             </button>
                         </div>
@@ -52,25 +52,7 @@
                 let limit = $('#limit').find(":selected").val();
                 window.location.href = `/book?limit=${limit}`
             });
-
-            $.ajaxSetup({headers: {'csrftoken': '{{ csrf_token() }}'}});
-            $('.btn-add-to-cart').on('click', function () {
-                let id = $(this).data('book-id')
-                console.log(id)
-                $.ajax({
-                    type: 'GET',
-                    url: `/book/${id}`,
-                    success: function (response) {
-                        toastr.options = {
-                            "closeButton" : true,
-                            "positionClass": "toast-bottom-right"
-                        }
-                        toastr.success(response.message);
-                        var count = @json(Cart::instance('cart')->content()->count());
-                        $('#cart-badge').text(count);
-                    }
-                })
-            })
         })
     </script>
+    <script src="{{ asset('js/add-to-cart.js') }}"></script>
 @endpush

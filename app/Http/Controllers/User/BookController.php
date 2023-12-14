@@ -21,10 +21,11 @@ class BookController extends Controller
     {
         if ($request->ajax()) {
             $book = Book::findOrFail($id);
+            $qty = $request->get('qty') ?? 1;
             Cart::instance('cart')->add([
                 'id' => $id,
                 'name' => $book->title,
-                'qty' => 1,
+                'qty' => $qty,
                 'price' => $book->price,
                 'weight' => 0,
                 'options' => [
@@ -33,7 +34,8 @@ class BookController extends Controller
                 ]
             ]);
             return response()->json([
-                'message' => 'Add to cart successfully'
+                'message' => 'Add to cart successfully',
+                'cart' => Cart::instance('cart')->content()
             ]);
         }
     }
@@ -41,6 +43,11 @@ class BookController extends Controller
     public function detail($id)
     {
         $book = Book::find($id);
-        return view('user.book.detail', compact('book'));
+        if ($book->category !== 'none') {
+            $arrCate = explode(',', $book->category);
+        } else {
+            $arrCate = [];
+        }
+            return view('user.book.detail', compact('book', 'arrCate'));
     }
 }

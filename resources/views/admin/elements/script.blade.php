@@ -18,7 +18,17 @@
 <!-- inject:js -->
 <script src="{{asset('js/off-canvas.js')}}"></script>
 <script src="{{asset('js/misc.js')}}"></script>
-<!-- endinject -->
-<!-- Custom js for this page -->
-{{--<script src="{{asset('js/dashboard.js')}}"></script>--}}
-<!-- End custom js for this page -->
+@if(auth()->user()->hasRole('user'))
+    <script>
+        $(document).ready(function () {
+            $('#cart-preview').mouseenter(function () {
+                $('#cart-dropdown-items').show();
+            })
+
+            $('#cart-preview, #cart-dropdown-items').mouseleave(function () {
+                $('#cart-dropdown-items').hide()
+            })
+        })
+    </script>
+@endif
+

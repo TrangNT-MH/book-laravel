@@ -13,11 +13,24 @@
                 <i class="icon-magnifier"></i>
                 <input type="search" class="form-control" placeholder="Search Here" title="Search here">
             </form>
-            <li class="nav-item">
+            <li class="nav-item cart-dropdown" id="cart-preview">
                 <a href="{{ route('user.cart') }}" class="nav-link">
-                    <i class="icon-basket-loaded"></i>
+                    <i class="icon-basket-loaded" ></i>
                     <span id="cart-badge" class="badge badge-danger">{{ Cart::instance('cart')->content()->count() }}</span>
                 </a>
+                <div id="cart-dropdown-items" class="p-2" style="display: none">
+                    <div class="dropdown-header d-flex justify-content-between">
+                        <p><strong>Recent items</strong></p>
+                        <a href="{{ route('user.cart') }}" class="btn btn-primary">Go to cart</a>
+                    </div>
+                    @foreach(Cart::instance('cart')->content() as $item)
+                        <div class="cart-preview-item d-flex">
+                            <img src="{{ asset('storage/' . $item->options['image']) }}" alt="" class="w-25">
+                            <a class="book-title-preview">{{ $item->name }}</a>
+                            <p>{{ $item->price }}</p>
+                        </div>
+                    @endforeach
+                </div>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">

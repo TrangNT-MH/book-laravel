@@ -43,27 +43,4 @@ class Book extends Model
             ->paginate(5)
             ->appends(request()->query());
     }
-
-//    public function getBuyableIdentifier($options = null)
-//    {
-//        // TODO: Implement getBuyableIdentifier() method.
-//        return $this->id;
-//    }
-//
-//    public function getBuyableDescription($options = null)
-//    {
-//        // TODO: Implement getBuyableDescription() method.
-//        return $this->description;
-//    }
-//
-//    public function getBuyablePrice($options = null)
-//    {
-//        // TODO: Implement getBuyablePrice() method.
-//        return $this->price;
-//    }
-//
-//    public function getBuyableWeight($options = null)
-//    {
-//        // TODO: Implement getBuyableWeight() method.
-//    }
 }

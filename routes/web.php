@@ -51,5 +51,6 @@ Route::group(['middleware' => ['role:user|admin']], function () {
     Route::get('/cart', [CartController::class, 'index'])->name('user.cart');
     Route::delete('/cart/delete/{id}', [CartController::class, 'delete'])->name('user.cart.delete');
     Route::put('/cart/update/{id}', [CartController::class, 'update'])->name('user.cart.update');
+    Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('user.cart.checkout');
 });
 

@@ -19,7 +19,7 @@
                                     <img src="{{ asset('storage/' . $item->options['image']) }}" alt="">
                                 </div>
                                 <div class="col-4 d-flex flex-column">
-                                    <a class="book-cart-title" href="{{ route('user.book.detail', [$item->rowId]) }}">
+                                    <a class="book-cart-title" href="{{ route('user.book.detail', [$item->id]) }}">
                                         {{ $item->name }}
                                     </a>
                                     <div class="book-authors">
@@ -58,7 +58,7 @@
                         @endforeach
                         <div class="cart-footer col-12 my-3 d-flex flex-column">
                             <div class="book-total-price d-flex align-items-center justify-content-end mb-5">
-                                <span class="display-5 font-weight-medium text-capitalize"> The total price: {{ Cart::instance('cart')->subtotal() }}$ </span>
+                                <span class="display-5 font-weight-medium text-capitalize"> The total price: {{ Cart::instance('cart')->initial() }}$ </span>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="mb-0">
