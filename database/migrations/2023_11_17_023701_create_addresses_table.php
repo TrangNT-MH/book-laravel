@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('street_number');
-            $table->string('street_address');
+            $table->string('address_detail');
+            $table->string('ward');
             $table->string('district');
-            $table->string('city');
+            $table->string('province');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

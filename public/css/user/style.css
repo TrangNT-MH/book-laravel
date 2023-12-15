@@ -241,6 +241,16 @@
     padding: 5px 10px;
 }
 
+.btn-add-address {
+    margin-left: 15px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
+.btn-add-address:hover {
+    color: #fff ;
+}
+
 .modal button {
     display: flex;
     align-items: center;

@@ -52,5 +52,7 @@ Route::group(['middleware' => ['role:user|admin']], function () {
     Route::delete('/cart/delete/{id}', [CartController::class, 'delete'])->name('user.cart.delete');
     Route::put('/cart/update/{id}', [CartController::class, 'update'])->name('user.cart.update');
     Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('user.cart.checkout');
+    Route::post('/cart/checkout', [CartController::class, 'storeAddress'])->name('user.cart.checkout.storeAddress');
+    Route::delete('cart/checkout/{id}', [CartController::class, 'delAddress'])->name('user.cart.checkout.delAddress');
 });
 

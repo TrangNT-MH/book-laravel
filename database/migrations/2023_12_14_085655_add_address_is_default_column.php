@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('addresses', function (Blueprint $table) {
-            $table->tinyInteger('is_default')->after('city');
+            $table->tinyInteger('is_default')->default(0)->after('province');
         });
     }
 
