@@ -21,22 +21,6 @@
                               class="badge badge-danger">{{ Cart::instance('cart')->content()->count() }}</span>
                     </a>
                 </div>
-                <div id="cart-dropdown-items" class="p-2" style="display: none">
-                    <div class="dropdown-header d-flex justify-content-between align-items-center p-0">
-                        <p class="p-0"><strong>Recent items</strong></p>
-                        <a href="{{ route('user.cart') }}" class="btn btn-outline-primary btn-icon-text">Go to cart</a>
-                    </div>
-                    <hr class="my-2">
-                    <div class="cart-preview-items">
-                        @foreach(Cart::instance('cart')->content()->sortByDesc('added_at')->take(5) as $item)
-                            <a href="{{ route('user.book.detail', [$item->id]) }}" class="cart-preview-item d-flex justify-content-between align-items-center my-2">
-                                <img src="{{ asset('storage/' . $item->options['image']) }}" alt="" class="w-25">
-                                <p class="book-title-preview mx-3">{{ $item->name }}</p>
-                                <p class="book-price-preview">{{ $item->price }}$</p>
-                            </a>
-                        @endforeach
-                    </div>
-                </div>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">

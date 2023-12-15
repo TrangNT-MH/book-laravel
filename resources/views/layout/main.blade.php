@@ -16,19 +16,5 @@
 </div>
 @include('admin.elements.script')
 @stack('script')
-@if(auth()->user()->hasRole('user'))
-    <script>
-        $(document).ready(function () {
-            $('.cart-icon').mouseover(function () {
-                $('#cart-dropdown-items').show();
-            })
-
-            $('.cart-dropdown').mouseleave(function () {
-                $('#cart-dropdown-items').hide()
-            })
-        })
-    </script>
-@endif
-
 </body>
 </html>

@@ -123,15 +123,14 @@
                 </div>
                 <div class="address-form modal-body" style="display: none;">
                     <form id="form" method="post" action="" class="needs-validation" novalidate>
+                        @csrf
                         <div class="mb-3">
                             <label for="address_1" class="form-label">Address 1</label>
-                            <input type="text" class="form-control address_1" id="address_1" name="address_1" required>
-                            <div class="invalid-feedback"></div>
+                            <input type="text" class="form-control address_1" id="address_1" name="address_1">
                         </div>
                         <div class="mb-3">
                             <label for="district" class="form-label">District</label>
-                            <input type="text" class="form-control" id="district" name="district" required>
-                            <div class="invalid-feedback"></div>
+                            <input type="text" class="form-control" id="district" name="district">
                         </div>
                         <div class="mb-3">
                             <label for="city" class="form-label">City</label>
@@ -157,7 +156,135 @@
                                 Update Address
                             </button>
                         </div>
+                        <div class="form-group">
+                            <label for="address-street">Title</label>
+                            <input type="text" class="form-control" id="book-title" name="title"
+                                   placeholder="Title" autocomplete="off"
+                                   value="{{ old('title', $selectBook->title) }}" readonly>
+                            @if ($errors->has('title'))
+                                <span class="text-danger">{{ $errors->first('title') }}</span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="book-isbn10">ISBN 10</label>
+                            <input type="text" class="form-control" id="book-isbn10" name="isbn10"
+                                   placeholder="ISBN 10" value="{{ old('isbn10', $selectBook->isbn10) }}" readonly>
+                            @if ($errors->has('isbn10'))
+                                <span class="text-danger">{{ $errors->first('isbn10') }}</span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="book-author">Author</label>
+                            <input type="text" class="form-control" id="book-author" name="author"
+                                   placeholder="Author" value="{{ old('author', $selectBook->author) }}" readonly>
+                            @if ($errors->has('author'))
+                                <span class="text-danger">{{ $errors->first('author') }}</span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="book-publication-date">Publication Date</label>
+                            <input type="date" class="form-control" id="book-publication-date"
+                                   name="publication_date"
+                                   placeholder="Publication Date"
+                                   value="{{ old('publication_date', $selectBook->publication_date) }}"
+                                   readonly>
+                            @if ($errors->has('publication_date'))
+                                <span class="text-danger">{{ $errors->first('publication_date') }}</span>
+                            @endif
+                        </div>
                     </form>
+                    <form action="{{ route('admin.book.edit', $selectBook->id) }}" method="post" class="forms-update-book"
+                          enctype="multipart/form-data" autocomplete="off">
+                        @method('PUT')
+                        @csrf
+                        <div class="book-detail d-flex flex-row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <img id="image-preview" src="{{ asset('storage/' . $selectBook->image) }}"
+                                         alt="Image Preview"
+                                         class="img-fluid p-0 mx-auto d-block mb-3 px-2">
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label for="book-title">Title</label>
+                                    <input type="text" class="form-control" id="book-title" name="title"
+                                           placeholder="Title" autocomplete="off"
+                                           value="{{ old('title', $selectBook->title) }}" readonly>
+                                    @if ($errors->has('title'))
+                                        <span class="text-danger">{{ $errors->first('title') }}</span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="book-isbn10">ISBN 10</label>
+                                    <input type="text" class="form-control" id="book-isbn10" name="isbn10"
+                                           placeholder="ISBN 10" value="{{ old('isbn10', $selectBook->isbn10) }}" readonly>
+                                    @if ($errors->has('isbn10'))
+                                        <span class="text-danger">{{ $errors->first('isbn10') }}</span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="book-author">Author</label>
+                                    <input type="text" class="form-control" id="book-author" name="author"
+                                           placeholder="Author" value="{{ old('author', $selectBook->author) }}" readonly>
+                                    @if ($errors->has('author'))
+                                        <span class="text-danger">{{ $errors->first('author') }}</span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="book-publication-date">Publication Date</label>
+                                    <input type="date" class="form-control" id="book-publication-date"
+                                           name="publication_date"
+                                           placeholder="Publication Date"
+                                           value="{{ old('publication_date', $selectBook->publication_date) }}"
+                                           readonly>
+                                    @if ($errors->has('publication_date'))
+                                        <span class="text-danger">{{ $errors->first('publication_date') }}</span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Price</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-primary text-white">$</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="price" name="price"
+                                               aria-label="Amount (to the nearest dollar)"
+                                               value="{{ old('price', $selectBook->price) }}"
+                                               readonly>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">.00</span>
+                                        </div>
+                                    </div>
+                                    @if ($errors->has('price'))
+                                        <span class="text-danger">{{ $errors->first('price') }}</span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <input id="selectImg" type="file" name="image" class="file-upload-default" disabled>
+                                    <div class="input-group col-xs-12">
+                                        <input id="file-upload-name" type="text" class="form-control file-upload-info"
+                                               placeholder="Upload Image"
+                                               value="{{ old('image', @end(@explode('/', $selectBook->image))) }}" disabled>
+                                        <span class="input-group-append">
+                                        <label id="btn-upload" class="file-upload-browse btn btn-primary"
+                                               for="selectImg" type="button">Upload</label>
+                                    </span>
+                                    </div>
+                                    @if ($errors->has('image'))
+                                        <span class="text-danger">{{ $errors->first('image') }}</span>
+                                    @endif
+                                </div>
+                                <div class="form-group float-right">
+                                    <button type="submit" class="btn btn-update-book btn-primary btn-icon-text invisible">
+                                        Submit
+                                        <i class="icon-cloud-upload btn-icon-prepend"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -168,6 +295,10 @@
         $(document).ready(function () {
             $('.change-address').on('click', function () {
                 $('.btn-modal').click();
+            })
+            $('.btn-add-address').on('click', function () {
+                $('.address-form').show();
+                $('.address-list').hide();
             })
         })
     </script>

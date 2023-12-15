@@ -145,50 +145,6 @@
     border: none;
 }
 
-.nav-item {
-    position: relative;
-}
-
-#cart-dropdown-items {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 999;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 10px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
-    width: 300px;
-}
-
-.nav-item:hover #cart-dropdown-items {
-    display: block;
-}
-
-#cart-dropdown-items .dropdown-header a {
-    padding: 5px;
-}
-
-.cart-preview-items  a:hover {
-    background: lightgray;
-}
-
-.book-title-preview {
-    font-weight: 600;
-    font-size: 12px;
-    font-family: 'Montserrat', 'sans-serif';
-    color: #1b8dbf;
-    float: left;
-    line-height: 1.5;
-}
-
-.book-price-preview {
-    font-weight: 600;
-    font-size: 14px;
-    font-family: 'Montserrat', 'sans-serif';
-    color: #1d6b1f;
-}
-
 /*Book detail*/
 .book-detail-content {
     gap: 20px;
