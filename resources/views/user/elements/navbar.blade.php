@@ -14,22 +14,28 @@
                 <input type="search" class="form-control" placeholder="Search Here" title="Search here">
             </form>
             <li class="nav-item cart-dropdown" id="cart-preview">
-                <a href="{{ route('user.cart') }}" class="nav-link">
-                    <i class="icon-basket-loaded" ></i>
-                    <span id="cart-badge" class="badge badge-danger">{{ Cart::instance('cart')->content()->count() }}</span>
-                </a>
+                <div class="cart-icon">
+                    <a href="{{ route('user.cart') }}" class="nav-link">
+                        <i class="icon-basket-loaded"></i>
+                        <span id="cart-badge"
+                              class="badge badge-danger">{{ Cart::instance('cart')->content()->count() }}</span>
+                    </a>
+                </div>
                 <div id="cart-dropdown-items" class="p-2" style="display: none">
-                    <div class="dropdown-header d-flex justify-content-between">
-                        <p><strong>Recent items</strong></p>
-                        <a href="{{ route('user.cart') }}" class="btn btn-primary">Go to cart</a>
+                    <div class="dropdown-header d-flex justify-content-between align-items-center p-0">
+                        <p class="p-0"><strong>Recent items</strong></p>
+                        <a href="{{ route('user.cart') }}" class="btn btn-outline-primary btn-icon-text">Go to cart</a>
                     </div>
-                    @foreach(Cart::instance('cart')->content() as $item)
-                        <div class="cart-preview-item d-flex">
-                            <img src="{{ asset('storage/' . $item->options['image']) }}" alt="" class="w-25">
-                            <a class="book-title-preview">{{ $item->name }}</a>
-                            <p>{{ $item->price }}</p>
-                        </div>
-                    @endforeach
+                    <hr class="my-2">
+                    <div class="cart-preview-items">
+                        @foreach(Cart::instance('cart')->content()->sortByDesc('added_at')->take(5) as $item)
+                            <a href="{{ route('user.book.detail', [$item->id]) }}" class="cart-preview-item d-flex justify-content-between align-items-center my-2">
+                                <img src="{{ asset('storage/' . $item->options['image']) }}" alt="" class="w-25">
+                                <p class="book-title-preview mx-3">{{ $item->name }}</p>
+                                <p class="book-price-preview">{{ $item->price }}$</p>
+                            </a>
+                        @endforeach
+                    </div>
                 </div>
             </li>
             <li class="nav-item">
@@ -40,11 +46,13 @@
             <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
                 <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown"
                    aria-expanded="false">
-                    <img class="img-xs rounded-circle ml-2" src="{{ asset('images/faces/face8.jpg') }}" alt="Profile image"> <span
+                    <img class="img-xs rounded-circle ml-2" src="{{ asset('images/faces/face8.jpg') }}"
+                         alt="Profile image"> <span
                         class="font-weight-normal"> {{ auth()->user()->name }} </span></a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                     <div class="dropdown-header text-center">
-                        <img class="img-md rounded-circle" src="{{ asset('images/faces/face8.jpg') }}" alt="Profile image">
+                        <img class="img-md rounded-circle" src="{{ asset('images/faces/face8.jpg') }}"
+                             alt="Profile image">
                         <p class="mb-1 mt-3">Allen Moreno</p>
                         <p class="font-weight-light text-muted mb-0">{{ auth()->user()->email }}</p>
                     </div>
@@ -53,7 +61,8 @@
                     <a class="dropdown-item"><i class="dropdown-item-icon icon-speech text-primary"></i> Messages</a>
                     <a class="dropdown-item"><i class="dropdown-item-icon icon-energy text-primary"></i> Activity</a>
                     <a class="dropdown-item"><i class="dropdown-item-icon icon-question text-primary"></i> FAQ</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}"><i class="dropdown-item-icon icon-power text-primary"></i>Sign Out</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}"><i
+                            class="dropdown-item-icon icon-power text-primary"></i>Sign Out</a>
                 </div>
             </li>
         </ul>
