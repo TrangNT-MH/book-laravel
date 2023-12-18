@@ -4,8 +4,10 @@ use App\Http\Controllers\Admin\BookController as AdminBookController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginRegisterController;
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\User\BookController as UserBookController;
 use App\Http\Controllers\User\CartController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,11 +21,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::get('/register', [LoginRegisterController::class, 'register'])->name('register');
 Route::post('/store', [LoginRegisterController::class, 'store'])->name('store');
-Route::get('/', [LoginRegisterController::class, 'login'])->name('login');
+Route::get('/login', [LoginRegisterController::class, 'login'])->name('login');
 Route::post('/login', [LoginRegisterController::class, 'authenticate'])->name('authenticate');
 Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('logout');
+
+Route::controller(VerificationController::class)->group(function() {
+    Route::get('/email/verify', 'notice')->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', 'verify')->name('verification.verify');
+    Route::post('/email/resend', 'resend')->name('verification.resend');
+});
 
 Route::group(['middleware' => ['role:admin']], function () {
     Route::prefix('admin')->group(function () {

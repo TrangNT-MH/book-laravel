@@ -10,6 +10,8 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use stdClass;
 
 class CartController extends Controller
 {
@@ -48,22 +50,28 @@ class CartController extends Controller
 
     public function storeAddress(AddressRequest $request)
     {
-        $id = Auth::user()->getAuthIdentifier();
-        $data = [
-            "user_id" => $id,
-            "address_detail" => trim($request->address_detail),
-            "ward" => trim($request->ward),
-            "district" => trim($request->district),
-            "province" => trim($request->province),
-            "is_default" => $request->is_default ? 1 : 0
-        ];
-        try {
-            Address::updateDefault($id);
-            Address::updateOrCreate($data);
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        if($request->validated()->fails())
+        {
+            return false;
+        } else {
+            $id = Auth::user()->getAuthIdentifier();
+            $data = [
+                "user_id" => $id,
+                "address_detail" => trim($request->address_detail),
+                "ward" => trim($request->ward),
+                "district" => trim($request->district),
+                "province" => trim($request->province),
+                "is_default" => $request->is_default ? 1 : 0
+            ];
+            try {
+                Address::updateDefault($id);
+                Address::updateOrCreate($data);
+//                return redirect()->back();
+            } catch (\Exception $e) {
+                return $e->getMessage();
+            }
         }
-        return redirect()->back();
+
     }
 
     public function delAddress($id, Request $request)

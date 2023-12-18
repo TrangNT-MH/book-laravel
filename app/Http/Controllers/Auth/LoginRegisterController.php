@@ -8,6 +8,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,14 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginRegisterController extends Controller
 {
+    public function __construct()
+    {
+//        $this->middleware('guest')->except([
+//            'logout', 'home'
+//        ]);
+//        $this->middleware('auth')->only('logout', 'home');
+//        $this->middleware('verified')->only('home');
+    }
     public function register()
     {
         return view('auth.register');
@@ -29,16 +38,17 @@ class LoginRegisterController extends Controller
                 'email' => $request['email'],
                 'password' => Hash::make($request['password'])
             ]);
+            $user->assignRole('user');
+
+
+            event(new Registered($user));
 
             $credentials = $request->only('email', 'password');
             Auth::attempt($credentials);
             $request->session()->regenerate();
 
-            $user->assignRole('user');
+            return redirect()->route('verification.notice');
         });
-
-        return redirect()->intended('/')
-            ->withSuccess('You have successfully registered & logged in!');
     }
 
     public function login()

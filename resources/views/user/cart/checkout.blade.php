@@ -82,9 +82,6 @@
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center">
                     <h4 class="modal-title" id="addressModalLabel">Addresses</h4>
-                    <button type="button" class="btn btn-icon btn-close" data-dismiss="modal" aria-label="Close">
-                        <i class="icon-close"></i>
-                    </button>
                 </div>
                 <div class="address-list modal-body">
                     @foreach ($addresses as $address)
@@ -101,7 +98,7 @@
                                             <p>{{ $address['address_detail'] . ', ' . $address['ward'] . ', ' . $address['district'] . ', ' . $address['province'] }}</p>
                                             <div class="edit-delete">
                                                 <button type="button" class="btn-edit-address"
-                                                        data-address-id="">EDIT
+                                                        data-address-id="{{ $address['id'] }}">EDIT
                                                 </button>
                                                 <button type="button" class="btn-delete-address"
                                                         data-address-id="{{ $address['id'] }}" {{ $address['is_default'] === 1 ? 'disabled' : '' }}>
@@ -126,7 +123,7 @@
                     </div>
                 </div>
                 <div class="address-form modal-body" style="display: none;">
-                    <form id="form" method="post" action="" autocomplete="off">
+                    <form id="form" method="post" action="{{ route('user.cart.checkout.storeAddress') }}" autocomplete="off">
                         @csrf
                         <div class="form-group">
                             <label for="province">Province</label>
@@ -172,13 +169,17 @@
                             @endif
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-back">Back</button>
+                            @if(count($addresses) === 0)
+                                <button type="button" class="btn btn-secondary btn-back">Back</button>
+                            @else
+                                <button type="button" class="btn btn-secondary btn-cancel">Cancel</button>
+                            @endif
                             <button type="submit" class="btn btn-primary btn-save-address" name="save-address">
                                 Save
                             </button>
                             <button type="submit" class="btn btn-primary btn-update-address" name="save-address"
                                     style="display: none">
-                                Update Address
+                                Update
                             </button>
                         </div>
                     </form>
@@ -187,27 +188,73 @@
         </div>
     </div>
 @endsection
+
 @push('script')
+
     <script>
+
         $(document).ready(function () {
-            let addresses = @json($addresses);
-            if (addresses.length === 0) {
-                console.log(11)
-                $('.address-form').show();
-                $('.address-list').hide();
-                $('.btn-modal').click()
+            let errors = @json($errors->any());
+            if (errors) {
+                $('#form').submit(function (event) {
+                    event.preventDefault;
+                })
             }
+            let addresses = @json($addresses);
+            function showAddressFrom() {
+                    $('.address-form').show();
+                    $('.address-list').hide();
+            }
+
+            function showAddressList() {
+                $('.address-form').hide();
+                $('.address-list').show();
+            }
+
+            if (addresses.length === 0) {
+                showAddressFrom();
+                $('.btn-modal').click();
+
+            }
+
+            $('.btn-back').on('click', function () {
+                if (addresses.length === 0) {
+                    window.location.href = "{{ route('user.cart') }}";
+                }
+            })
+
             $('.change-address').on('click', function () {
                 $('.btn-modal').click();
             })
+
             $('.btn-add-address').on('click', function () {
-                $('.address-form').show();
-                $('.address-list').hide();
+                $('#address-detail').val('');
+                $('#ward').val('');
+                $('#district').val('');
+                $('#province').val('');
+                showAddressFrom()
             })
-            $('.btn-back').on('click', function () {
-                $('.address-form').hide();
-                $('.address-list').show();
+
+            $('.btn-cancel').on('click', function () {
+                showAddressList()
             })
+
+            function showEditForm(address) {
+                $('#address-detail').val(address.address_detail);
+                $('#ward').val(address.ward);
+                $('#district').val(address.district);
+                $('#province').val(address.province);
+            }
+
+            $('.btn-edit-address').on('click', function (){
+                let addressId = $(this).data('address-id');
+                let addressToEdit = addresses.find(address => address.id === addressId);
+                if (addressToEdit) {
+                    showAddressFrom();
+                    showEditForm(addressToEdit);
+                }
+            });
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
