@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html lang="">
-<head>
-    @include('admin.elements.head')
-</head>
-<body>
+@extends('layout.master')
+@section('content')
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="content-wrapper d-flex align-items-center auth">
@@ -69,7 +65,4 @@
         <!-- content-wrapper ends -->
     </div>
 </div>
-@include('admin.elements.script')
-@stack('script')
-</body>
-</html>
+@endsection

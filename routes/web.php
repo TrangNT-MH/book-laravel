@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BookController as AdminBookController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\User\BookController as UserBookController;
@@ -30,11 +31,21 @@ Route::post('/store', [LoginRegisterController::class, 'store'])->name('store');
 Route::get('/login', [LoginRegisterController::class, 'login'])->name('login');
 Route::post('/login', [LoginRegisterController::class, 'authenticate'])->name('authenticate');
 Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('logout');
+Route::get('/forget-password', [ForgetPasswordController::class, 'forgetPasswordForm'])->name('password.forget');
+Route::post('/forget-password', [ForgetPasswordController::class, 'sendLink'])->name('password.request');
+Route::get('/reset-password', [ForgetPasswordController::class, 'resetPasswordForm'])->name('password.reset');
+Route::post('/reset-password', [ForgetPasswordController::class, 'resetPassword'])->name('password.reset.verify');
 
-Route::controller(VerificationController::class)->group(function() {
-    Route::get('/email/verify', 'notice')->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', 'verify')->name('verification.verify');
-    Route::post('/email/resend', 'resend')->name('verification.resend');
+Route::group(['middleware' => ['auth']], function() {
+    Route::group(['middleware' => ['verified']], function () {
+        Route::get('/book', ['UserController', ])->name('dashboard.index');
+    });
+});
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/email/verify', [VerificationController::class, 'notice'])->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
+    Route::post('/email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 });
 
 Route::group(['middleware' => ['role:admin']], function () {
@@ -43,7 +54,7 @@ Route::group(['middleware' => ['role:admin']], function () {
         Route::prefix('/book')->group(function () {
             Route::get('/index', [AdminBookController::class, 'index'])->name('admin.book.index');
             Route::get('/store', [AdminBookController::class, 'create'])->name('admin.book.create');
-            Route::post('/store', [AdminBookController::class, 'store'])->name('admin.book.store');
+            Route::post('/storeAdd', [AdminBookController::class, 'store'])->name('admin.book.store');
             Route::post('/index', [AdminBookController::class, 'index']);
             Route::get('/detail/{id}', [AdminBookController::class, 'detail'])->name('admin.book.detail');
             Route::put('/detail/{id}', [AdminBookController::class, 'edit'])->name('admin.book.edit');

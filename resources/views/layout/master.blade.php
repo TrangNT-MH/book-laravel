@@ -5,6 +5,7 @@
     @stack('style')
 </head>
 <body>
+@auth
 <div class="container-scroller">
     @include('admin.elements.navbar')
     <div class="container-fluid page-body-wrapper">
@@ -16,6 +17,9 @@
         </div>
     </div>
 </div>
+@else
+    @yield('content')
+@endauth
 @include('admin.elements.script')
 @stack('script')
 </body>

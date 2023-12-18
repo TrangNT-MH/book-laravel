@@ -17,14 +17,6 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginRegisterController extends Controller
 {
-    public function __construct()
-    {
-//        $this->middleware('guest')->except([
-//            'logout', 'home'
-//        ]);
-//        $this->middleware('auth')->only('logout', 'home');
-//        $this->middleware('verified')->only('home');
-    }
     public function register()
     {
         return view('auth.register');
@@ -32,23 +24,19 @@ class LoginRegisterController extends Controller
 
     public function store(RegisterRequest $request)
     {
-        DB::transaction(function () use ($request) {
-            $user = User::create([
-                'name' => $request['name'],
-                'email' => $request['email'],
-                'password' => Hash::make($request['password'])
-            ]);
-            $user->assignRole('user');
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password'])
+        ]);
+        $user->assignRole('user');
+        event(new Registered($user));
 
+        $credentials = $request->only('email', 'password');
+        Auth::attempt($credentials);
+        $request->session()->regenerate();
 
-            event(new Registered($user));
-
-            $credentials = $request->only('email', 'password');
-            Auth::attempt($credentials);
-            $request->session()->regenerate();
-
-            return redirect()->route('verification.notice');
-        });
+        return redirect()->route('verification.notice');
     }
 
     public function login()

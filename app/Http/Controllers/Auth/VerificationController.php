@@ -8,9 +8,6 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class VerificationController extends Controller
 {
-    /**
-     * Instantiate a new VerificationController instance.
-     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -20,13 +17,13 @@ class VerificationController extends Controller
 
     public function notice(Request $request)
     {
-        return $request->user()->hasVerifiedEmail() ? redirect()->route('home') : view('auth.verify-email');
+        return $request->user()->hasVerifiedEmail() ? redirect()->route('user.book.index') : view('auth.verify-email');
     }
 
     public function verify(EmailVerificationRequest $request)
     {
         $request->fulfill();
-        return redirect()->route('home');
+        return redirect()->route('user.book.index');
     }
 
     public function resend(Request $request)

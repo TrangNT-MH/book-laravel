@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html lang="">
-<head>
-    @include('admin.elements.head')
-</head>
-<body>
+@extends('layout.master')
+@section('content')
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="content-wrapper d-flex align-items-center auth">
@@ -19,7 +15,7 @@
                             @csrf
                             <div class="form-group">
                                 <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1"
-                                       placeholder="Username">
+                                       placeholder="Email">
                                 @if($errors->has('email'))
                                     <span class="text text-danger">{{ $errors->first('email') }}</span>
                                 @endif
@@ -42,7 +38,7 @@
                                     <label class="form-check-label text-muted">
                                         <input type="checkbox" class="form-check-input"> Keep me signed in </label>
                                 </div>
-                                <a href="#" class="auth-link text-black">Forgot password?</a>
+                                <a href="{{ route('password.forget') }}" class="auth-link text-black">Forgot password?</a>
                             </div>
                             <div class="mb-2">
                                 <button type="button" class="btn btn-block btn-facebook auth-form-btn">
@@ -61,7 +57,4 @@
     </div>
     <!-- page-body-wrapper ends -->
 </div>
-@include('admin.elements.script')
-@stack('script')
-</body>
-</html>
+@endsection
