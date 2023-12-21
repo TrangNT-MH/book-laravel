@@ -10,8 +10,33 @@ class PasswordResetToken extends Model
 {
     use HasFactory;
 
+    const __TABLE = 'password_reset_tokens';
+
     public static function insert($data)
     {
-        DB::table('password_reset_tokens')->insert($data);
+        DB::table(self::__TABLE)->insert($data);
+    }
+
+    public function find($token)
+    {
+        return DB::table(self::__TABLE)
+            ->where('token', $token)
+            ->first()?->email;
+    }
+
+    public function existToken($email)
+    {
+        return DB::table(self::__TABLE)
+            ->where('email', $email)
+            ->get();
+    }
+
+    public function deleteByToken($email, $token)
+    {
+        return DB::table(self::__TABLE)
+            ->where([
+                'email' => $email,
+                'token' => $token])
+            ->delete();
     }
 }

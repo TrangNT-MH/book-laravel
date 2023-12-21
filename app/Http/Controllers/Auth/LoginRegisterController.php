@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Models\ShoppingCart;
 use App\Models\User;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Auth\Events\Registered;
@@ -17,6 +18,12 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginRegisterController extends Controller
 {
+    protected $shoppingCart;
+
+    public function __construct()
+    {
+        $this->shoppingCart = new ShoppingCart();
+    }
     public function register()
     {
         return view('auth.register');
@@ -53,10 +60,7 @@ class LoginRegisterController extends Controller
                 return redirect()->intended('admin/dashboard');
             }
 
-            $storedCart = DB::table('shoppingcart')->where([
-                'identifier' => Auth::user()->getAuthIdentifier(),
-                'instance' => 'cart'
-            ])->value('content');
+            $storedCart = $this->shoppingCart->content(Auth::user()->getAuthIdentifier());
 
             $storedCart = unserialize($storedCart);
 
@@ -89,7 +93,8 @@ class LoginRegisterController extends Controller
      */
     public function logout(Request $request)
     {
-        Cart::instance('cart')->restore(Auth::user()->getAuthIdentifier());
+//        dd(Cart::instance('cart')->content());
+        Cart::instance('cart')->erase(Auth::user()->getAuthIdentifier());
         Cart::instance('cart')->store(Auth::user()->getAuthIdentifier());
         Auth::logout();
         $request->session()->invalidate();

@@ -74,7 +74,7 @@
                     <h4>{{ $book->price }}$</h4>
                 </div>
                 <button type="button" class="btn btn-danger btn-detail-add-to-cart btn-icon-text w-100 my-2" data-book-id="{{ $book->id }}">Add To Cart</button>
-                <a class="btn btn-outline-danger btn-buy w-100">Buy Now</a>
+                <a href="{{ route('user.cart.checkout') }}" class="btn btn-outline-danger btn-buy w-100">Buy Now</a>
             </div>
         </div>
     </div>

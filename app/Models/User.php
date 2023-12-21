@@ -46,6 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
+    const __TABLE = 'users';
     public function addresses()
     {
         return $this->hasMany(Address::class);
@@ -57,7 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function detail($id)
     {
-        return DB::table('users')
+        return DB::table(self::__TABLE)
             ->where('id', $id)
             ->get();
     }
@@ -66,11 +67,21 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param $key
      * @return \Illuminate\Database\Query\Builder|mixed
      */
-//    public function find($key)
-//    {
-//        return DB::table('users')
-//            ->find($key);
-//    }
+    public function findByEmail($email)
+    {
+        return DB::table(self::__TABLE)
+            ->where('email', $email)
+            ->first()->id;
+    }
+
+    public function updatePassword($email, $password)
+    {
+        return DB::table(self::__TABLE)
+            ->where('email', $email)
+            ->update([
+                'password' => $password
+            ]);
+    }
 
 //    public function getJWTIdentifier()
 //    {

@@ -33,8 +33,10 @@ Route::post('/login', [LoginRegisterController::class, 'authenticate'])->name('a
 Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('logout');
 Route::get('/forget-password', [ForgetPasswordController::class, 'forgetPasswordForm'])->name('password.forget');
 Route::post('/forget-password', [ForgetPasswordController::class, 'sendLink'])->name('password.request');
-Route::get('/reset-password', [ForgetPasswordController::class, 'resetPasswordForm'])->name('password.reset');
+Route::get('/reset-password/{token}', [ForgetPasswordController::class, 'resetPasswordForm'])->name('password.reset');
 Route::post('/reset-password', [ForgetPasswordController::class, 'resetPassword'])->name('password.reset.verify');
+Route::get('/resend/{token}', [ForgetPasswordController::class, 'resendRequest'])->name('password.resend.request');
+Route::post('/resend', [ForgetPasswordController::class, 'resend'])->name('password.resend');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::group(['middleware' => ['verified']], function () {

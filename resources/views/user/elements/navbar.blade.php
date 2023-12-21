@@ -8,7 +8,7 @@
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center flex-grow-1">
         <h5 class="mb-0 font-weight-medium d-none d-lg-flex">Welcome stellar dashboard!</h5>
-        <ul class="navbar-nav navbar-nav-right ml-auto">
+        <ul class="nav navbar-nav navbar-nav-right ml-auto">
             <form class="search-form d-none d-md-block" action="#">
                 <i class="icon-magnifier"></i>
                 <input type="search" class="form-control" placeholder="Search Here" title="Search here">
@@ -37,16 +37,18 @@
                     <div class="dropdown-header text-center">
                         <img class="img-md rounded-circle" src="{{ asset('images/faces/face8.jpg') }}"
                              alt="Profile image">
-                        <p class="mb-1 mt-3">Allen Moreno</p>
+                        <p class="mb-1 mt-3">{{ auth()->user()->name }}</p>
                         <p class="font-weight-light text-muted mb-0">{{ auth()->user()->email }}</p>
                     </div>
-                    <a class="dropdown-item"><i class="dropdown-item-icon icon-user text-primary"></i> My Profile <span
-                            class="badge badge-pill badge-danger">1</span></a>
-                    <a class="dropdown-item"><i class="dropdown-item-icon icon-speech text-primary"></i> Messages</a>
+                    <a class="dropdown-item">
+                        <i class="dropdown-item-icon icon-user text-primary"></i> My Profile
+                    </a>
+{{--                    <a class="dropdown-item"><i class="dropdown-item-icon icon-speech text-primary"></i> Messages</a>--}}
                     <a class="dropdown-item"><i class="dropdown-item-icon icon-energy text-primary"></i> Activity</a>
-                    <a class="dropdown-item"><i class="dropdown-item-icon icon-question text-primary"></i> FAQ</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}"><i
-                            class="dropdown-item-icon icon-power text-primary"></i>Sign Out</a>
+{{--                    <a class="dropdown-item"><i class="dropdown-item-icon icon-question text-primary"></i> FAQ</a>--}}
+                    <a class="dropdown-item" href="{{ route('logout') }}">
+                        <i class="dropdown-item-icon icon-power text-primary"></i>Sign Out
+                    </a>
                 </div>
             </li>
         </ul>
