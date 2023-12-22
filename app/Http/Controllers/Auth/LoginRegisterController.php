@@ -8,6 +8,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\ShoppingCart;
 use App\Models\User;
+use App\Repositories\ShoppingCartRepository;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -18,11 +19,11 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginRegisterController extends Controller
 {
-    protected $shoppingCart;
+    protected $shoppingCartRepository;
 
-    public function __construct()
+    public function __construct(ShoppingCartRepository $shoppingCartRepository)
     {
-        $this->shoppingCart = new ShoppingCart();
+        $this->shoppingCartRepository = $shoppingCartRepository;
     }
     public function register()
     {
@@ -60,7 +61,7 @@ class LoginRegisterController extends Controller
                 return redirect()->intended('admin/dashboard');
             }
 
-            $storedCart = $this->shoppingCart->content(Auth::user()->getAuthIdentifier());
+            $storedCart = $this->shoppingCartRepository->content(Auth::user()->getAuthIdentifier());
 
             $storedCart = unserialize($storedCart);
 

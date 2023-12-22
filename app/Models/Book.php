@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Repositories\BookRepository;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,13 +29,6 @@ class Book extends Model
     public function insert($data)
     {
         return DB::table('books')->insert($data);
-    }
-
-    public function detail($id)
-    {
-        return DB::table('books')
-            ->where('id', $id)
-            ->first();
     }
 
     public function list()

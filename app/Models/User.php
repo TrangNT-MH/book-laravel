@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Repositories\UserRepository;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,41 +48,20 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     const __TABLE = 'users';
+
     public function addresses()
     {
         return $this->hasMany(Address::class);
     }
 
-    /**
-     * @param $id
-     * @return \Illuminate\Support\Collection
-     */
-    public function detail($id)
-    {
-        return DB::table(self::__TABLE)
-            ->where('id', $id)
-            ->get();
-    }
-
-    /**
-     * @param $key
-     * @return \Illuminate\Database\Query\Builder|mixed
-     */
-    public function findByEmail($email)
-    {
-        return DB::table(self::__TABLE)
-            ->where('email', $email)
-            ->first()->id;
-    }
-
-    public function updatePassword($email, $password)
-    {
-        return DB::table(self::__TABLE)
-            ->where('email', $email)
-            ->update([
-                'password' => $password
-            ]);
-    }
+//    public function updatePassword($email, $password)
+//    {
+//        return DB::table(self::__TABLE)
+//            ->where('email', $email)
+//            ->update([
+//                'password' => $password
+//            ]);
+//    }
 
 //    public function getJWTIdentifier()
 //    {

@@ -7,6 +7,7 @@ use App\Http\Requests\EmailForgetPasswordRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Models\PasswordResetToken;
 use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,12 +17,12 @@ use Illuminate\Support\Str;
 
 class ForgetPasswordController extends Controller
 {
-    protected $user;
+    protected $userRepository;
     protected $passwordResetToken;
 
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
-        $this->user = new User();
+        $this->userRepository = $userRepository;
         $this->passwordResetToken = new PasswordResetToken();
     }
     public function forgetPasswordForm()
@@ -32,7 +33,7 @@ class ForgetPasswordController extends Controller
     public function sendLink(EmailForgetPasswordRequest $request)
     {
 
-        $token = md5(uniqid($this->user->findByEmail($request->email), true));
+        $token = md5(uniqid($this->userRepository->findByEmail($request->email), true));
         $email = $request->email;
 
         $data = ([
@@ -59,7 +60,7 @@ class ForgetPasswordController extends Controller
     {
         DB::transaction(function () use ($request) {
             $email = $this->passwordResetToken->find($request->token);
-            $this->user->updatePassword($email, Hash::make($request->password));
+            $this->userRepository->updatePassword($email, Hash::make($request->password));
             $this->passwordResetToken->deleteByToken($email, $request->token);
         });
 
@@ -78,7 +79,7 @@ class ForgetPasswordController extends Controller
             $this->passwordResetToken->deleteByToken($email, $request->token);
         }
 
-        $token = md5(uniqid($this->user->findByEmail($email), true));
+        $token = md5(uniqid($this->userRepository->findByEmail($email), true));
 
         $data = ([
             'email' => $email,

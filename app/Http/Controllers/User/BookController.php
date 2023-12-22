@@ -5,11 +5,19 @@ namespace App\Http\Controllers\User;
 use App\Filters\BookFilter;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Repositories\BookRepository;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
+    protected BookRepository $bookRepository;
+
+    public function __construct(BookRepository $bookRepository)
+    {
+        $this->bookRepository = $bookRepository;
+    }
+
     public function index(BookFilter $filter)
     {
         $perPage  = request()->get('limit', 10);
@@ -20,7 +28,7 @@ class BookController extends Controller
     public function addToCart(Request $request, $id)
     {
         if ($request->ajax()) {
-            $book = Book::findOrFail($id);
+            $book = $this->bookRepository->find($id);
             $qty = $request->get('qty') ?? 1;
             Cart::instance('cart')->add([
                 'id' => $id,
@@ -42,12 +50,12 @@ class BookController extends Controller
 
     public function detail($id)
     {
-        $book = Book::find($id);
+        $book = $this->bookRepository->find($id);
         if ($book->category !== 'none') {
             $arrCate = explode(',', $book->category);
         } else {
             $arrCate = [];
         }
-            return view('user.book.detail', compact('book', 'arrCate'));
+        return view('user.book.detail', compact('book', 'arrCate'));
     }
 }

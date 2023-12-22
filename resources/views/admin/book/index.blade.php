@@ -56,15 +56,17 @@
                         </div>
                     </div>
 
-                    <table class="table table-responsive mt-3">
+                    <table class="table mt-3">
                         <thead class="table-secondary">
                         <tr class="font-weight-bolder">
                             <th>No.</th>
                             <th>Title/Author</th>
-                            <th>ISBN10</th>
+                            <th>ISBN</th>
                             <th>Price</th>
+                            <th>Publisher</th>
                             <th>Publication Date</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -72,15 +74,16 @@
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>
-                                    <div class="book-title my-2 cursor-pointer"
+                                    <div class="book-title cursor-pointer"
                                          style="white-space: break-spaces !important; min-width: 160px;"
                                          onclick="window.location.href = '{{ route('admin.book.detail', [$value->id]) }}'">{{ $value->title }}
                                     </div>
-                                    <div class="book-author text-gray">{{ $value->author }}</div>
+                                    <div class="book-author text-gray">{{ $value->authors }}</div>
                                 </td>
-                                <td>{{ $value->isbn10 }}</td>
+                                <td>{{ $value->isbn }}</td>
                                 <td>{{ $value->price }}</td>
-                                <td>{{ $value->publication_date }}</td>
+                                <td>{{ $value->publisher }}</td>
+                                <td>{{ $value->publish_date }}</td>
                                 <td>
                                     @if($value->status === 1)
                                         <label class="badge badge-success">Active</label>
@@ -88,6 +91,7 @@
                                         <label class="badge badge-danger">Inactive</label>
                                     @endif
                                 </td>
+                                <td class="text-center"><i class="icon-action icon-options-vertical"></i></td>
                             </tr>
                         @endforeach
                         </tbody>

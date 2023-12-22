@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
+use App\Repositories\BookRepository;
 use Exception;
 use Illuminate\Container\RewindableGenerator;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,11 +17,11 @@ use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
-    private Book $bookModel;
+    protected BookRepository $bookRepository;
 
-    public function __construct()
+    public function __construct(BookRepository $bookRepository)
     {
-        $this->bookModel = new Book();
+        $this->bookRepository = $bookRepository;
     }
 
     public function index(Request $request)
@@ -84,7 +85,7 @@ class BookController extends Controller
 
             $validatedData['image'] = $this->getImage($image);
 
-            $this->bookModel->insert($validatedData);
+            $this->bookRepository->create($validatedData);
 
             return redirect()->route('admin.book.index');
         } catch (Exception $e) {
@@ -96,7 +97,7 @@ class BookController extends Controller
     public function detail(Request $request)
     {
         $id = $request->id;
-        $selectBook = $this->bookModel->detail($id);
+        $selectBook = $this->bookRepository->detail($id);
         return view('admin.book.detail', compact('selectBook'));
     }
 
@@ -105,11 +106,13 @@ class BookController extends Controller
         $selectBook = Book::findOrFail($request->id);
         $validatedData = $request->validated();
 
-        $selectBook->title = $validatedData['title'];
-        $selectBook->author = $validatedData['author'];
-        $selectBook->isbn10 = $validatedData['isbn10'];
-        $selectBook->price = $validatedData['price'];
-        $selectBook->publication_date = $validatedData['publication_date'];
+//        $selectBook->title = $validatedData['title'];
+//        $selectBook->author = $validatedData['author'];
+//        $selectBook->isbn10 = $validatedData['isbn10'];
+//        $selectBook->price = $validatedData['price'];
+//        $selectBook->publication_date = $validatedData['publication_date'];
+
+        $selectBook = $validatedData;
 
         if (isset($validatedData['image'])) {
             $selectBook['image'] = $this->getImage($request->file('image'));
@@ -135,8 +138,7 @@ class BookController extends Controller
         } else {
             $newStatus = 1;
         }
-        $this->bookModel->where('id', $id)
-                        ->update(['status' => $newStatus]);
+        $this->bookRepository->updateStatus($request->id, $newStatus);
 
         return redirect('admin/book/detail/' . $id);
     }

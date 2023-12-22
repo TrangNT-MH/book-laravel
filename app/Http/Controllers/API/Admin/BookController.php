@@ -9,17 +9,18 @@ use App\Http\Requests\UpdateBookRequest;
 use App\Http\Resources\BookCollection;
 use App\Http\Resources\BookResource;
 use App\Models\Book;
+use App\Repositories\BookRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
-    private Book $bookModel;
+    protected BookRepository $bookRepository;
 
-    public function __construct()
+    public function __construct(BookRepository $bookRepository)
     {
-        $this->bookModel = new Book();
+        $this->bookRepository = $bookRepository;
     }
 
     public function index(BookFilter $filter)
@@ -44,7 +45,7 @@ class BookController extends Controller
 
             $validatedData['image'] = $this->getImage($image);
 
-            $book = Book::create($validatedData);
+            $book = $this->bookRepository->create($validatedData);
 
             return new BookResource($book);
         } catch (\Exception $e) {
@@ -57,7 +58,7 @@ class BookController extends Controller
 
     public function detail($id)
     {
-        $selectBook = $this->bookModel->find($id);
+        $selectBook = $this->bookRepository->find($id);
 
         if (!$selectBook) {
             return response()->json([
@@ -103,8 +104,7 @@ class BookController extends Controller
             $newStatus = 1;
             $action = 'activated';
         }
-        $this->bookModel->where('id', $request->id)
-            ->update(['status' => $newStatus]);
+        $this->bookRepository->updateStatus($request->id, $newStatus);
 
         return response()->json([
             'message' => 'Book was ' . $action . ' successfully',
