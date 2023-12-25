@@ -8,8 +8,8 @@
                     <div class="dot-indicator bg-success"></div>
                 </div>
                 <div class="text-wrapper">
-                    <p class="profile-name">Allen Moreno</p>
-                    <p class="designation">Administrator</p>
+                    <p class="profile-name">{{ Auth::user()->name }}</p>
+                    <p class="designation">{{ Auth::user()->roles->pluck('name')->first()  }} </p>
                 </div>
                 <div class="icon-container">
                     <i class="icon-bubbles"></i>
@@ -26,19 +26,25 @@
                 <i class="icon-screen-desktop menu-icon"></i>
             </a>
         </li>
-        <li class="nav-item nav-category"><span class="nav-link">UI Elements</span></li>
+        <li class="nav-item nav-category"><span class="nav-link">Management</span></li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" role="button" aria-expanded="false"
-               aria-controls="ui-basic">
-                <span class="menu-title">Basic UI Elements</span>
-                <i class="icon-layers menu-icon"></i>
+            <a class="nav-link" data-toggle="collapse" href="#book" role="button" aria-expanded="false"
+               aria-controls="book">
+                <span class="menu-title">Book</span>
+                <i class="icon-book-open menu-icon"></i>
             </a>
-            <div class="collapse" id="ui-basic">
+            <div class="collapse" id="book">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="">Buttons</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.book.index') }}">
+                            <span class="menu-title">Book List</span>
+                        </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link"
-                                            href="">Typography</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.book.create') }}">
+                            <span class="menu-title">Add Book</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </li>

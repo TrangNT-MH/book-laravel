@@ -23,11 +23,16 @@ class UpdateBookRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'isbn' => 'bail|required|regex:/([0-9X]{10}$)/|unique:books,isbn,'. $this->id,
             'title' => 'bail|required|string',
-            'isbn10' => 'bail|required|regex:/([0-9X]{10}$)/|unique:books,isbn10,'. $this->id,
-            'author' => 'bail|required|string',
+            'authors' => 'bail|required|string',
             'price' => 'bail|required|decimal:2',
-            'publication_date' => 'bail|required',
+            'description' => 'required',
+            'publisher' => 'bail|required',
+            'category' => 'required',
+            'language' => 'required',
+            'page_count' => 'required|int',
+            'publish_date' => 'bail|required',
             'image' => 'bail|sometimes|required|image'
         ];
     }

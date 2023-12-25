@@ -31,7 +31,7 @@
                 </div>
                 <div class="book-description">
                     <h6 class="">Description</h6>
-                    <p>{{ $book->description }}</p>
+                    {!! $book->description !!}
                 </div>
             </div>
             <div class="card-body book-detail">

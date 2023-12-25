@@ -28,6 +28,7 @@ abstract class EloquentRepository
 
     public function update($id, $data)
     {
+        return $this->model->where('id', $id)->update($data);
     }
 
     public function create($data)

@@ -58,8 +58,8 @@ class BookController extends Controller
                 foreach ($allBooks as $row) {
                     $output .= '<li class="list-group-item" data-book-id="' . $row->id . '">' .
                         '<div class="book-title">Title: <span class="text-gray font-italic">' . $row->title . '</div></span>' .
-                        '<div class="book-author">Author: <span class="text-gray font-italic">' . $row->author . '</div></span>' .
-                        '<div class="book-isbn10">ISBN10: <span class="text-gray font-italic">' . $row->isbn10 . '</div></span>' .
+                        '<div class="book-author">Author: <span class="text-gray font-italic">' . $row->authors . '</div></span>' .
+                        '<div class="book-isbn10">ISBN10: <span class="text-gray font-italic">' . $row->isbn . '</div></span>' .
                         '</li>';
                 }
                 $output .= '</ul>';
@@ -103,25 +103,15 @@ class BookController extends Controller
 
     public function edit(UpdateBookRequest $request)
     {
-        $selectBook = Book::findOrFail($request->id);
         $validatedData = $request->validated();
 
-//        $selectBook->title = $validatedData['title'];
-//        $selectBook->author = $validatedData['author'];
-//        $selectBook->isbn10 = $validatedData['isbn10'];
-//        $selectBook->price = $validatedData['price'];
-//        $selectBook->publication_date = $validatedData['publication_date'];
-
-        $selectBook = $validatedData;
-
         if (isset($validatedData['image'])) {
-            $selectBook['image'] = $this->getImage($request->file('image'));
+            $validatedData['image'] = $this->getImage($request->file('image'));
         }
 
         try {
-            if ($selectBook->save()) {
-                return view('admin.book.detail', compact('selectBook'));
-            }
+            $selectBook = $this->bookRepository->update($request->id, $validatedData);
+            return redirect()->route('admin.book.detail', $request->id);
         } catch (Exception $e) {
             Storage::delete($validatedData['image']);
             return back()->withInput()->withErrors(['error' => 'Update failed.']);

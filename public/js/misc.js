@@ -11,7 +11,6 @@
         //Active class can be hard coded directly in html file also as required
 
         function addActiveClass(element) {
-            console.log(element);
             if (current === "") {
                 //for root url
                 if (element.attr('href').indexOf("index.html") !== -1) {
