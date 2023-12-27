@@ -15,27 +15,35 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="book-isbn10">ISBN 10</label>
-                        <input type="text" class="form-control" id="book-isbn10" name="isbn10"
-                               placeholder="ISBN 10">
-                        @if ($errors->has('isbn10'))
-                            <span class="text-danger">{{ $errors->first('isbn10') }}</span>
+                        <label for="book-isbn">ISBN 10</label>
+                        <input type="text" class="form-control" id="book-isbn" name="isbn"
+                               placeholder="ISBN">
+                        @if ($errors->has('isbn'))
+                            <span class="text-danger">{{ $errors->first('isbn') }}</span>
                         @endif
                     </div>
                     <div class="form-group">
                         <label for="book-author">Author</label>
-                        <input type="text" class="form-control" id="book-author" name="author"
+                        <input type="text" class="form-control" id="book-author" name="authors"
                                placeholder="Author">
-                        @if ($errors->has('author'))
-                            <span class="text-danger">{{ $errors->first('author') }}</span>
+                        @if ($errors->has('authors'))
+                            <span class="text-danger">{{ $errors->first('authors') }}</span>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="book-publisher">Publisher</label>
+                        <input type="text" class="form-control" id="book-publisher" name="publisher"
+                               placeholder="Publisher">
+                        @if ($errors->has('publisher'))
+                            <span class="text-danger">{{ $errors->first('publisher') }}</span>
                         @endif
                     </div>
                     <div class="form-group">
                         <label for="book-publication-date">Publication Date</label>
-                        <input type="date" class="form-control" id="book-publication-date" name="publication_date"
+                        <input type="date" class="form-control" id="book-publication-date" name="publish_date"
                                placeholder="Publication Date">
-                        @if ($errors->has('publication_date'))
-                            <span class="text-danger">{{ $errors->first('publication_date') }}</span>
+                        @if ($errors->has('publish_date'))
+                            <span class="text-danger">{{ $errors->first('publish_date') }}</span>
                         @endif
                     </div>
                     <div class="form-group">
