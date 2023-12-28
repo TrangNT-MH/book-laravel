@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layouts.user_type.auth')
 @section('content')
     <div class="cart-checkout-wrapper d-flex col-12">
         <div class="box-cart-checkout p-5 col-6">
@@ -123,7 +123,8 @@
                     </div>
                 </div>
                 <div class="address-form modal-body" style="display: none;">
-                    <form id="form" method="post" action="{{ route('user.cart.checkout.storeAddress') }}" autocomplete="off">
+                    <form id="form" method="post" action="{{ route('user.cart.checkout.storeAddress') }}"
+                          autocomplete="off">
                         @csrf
                         <div class="form-group">
                             <label for="province">Province</label>
@@ -201,9 +202,10 @@
                 })
             }
             let addresses = @json($addresses);
+
             function showAddressFrom() {
-                    $('.address-form').show();
-                    $('.address-list').hide();
+                $('.address-form').show();
+                $('.address-list').hide();
             }
 
             function showAddressList() {
@@ -246,7 +248,7 @@
                 $('#province').val(address.province);
             }
 
-            $('.btn-edit-address').on('click', function (){
+            $('.btn-edit-address').on('click', function () {
                 let addressId = $(this).data('address-id');
                 let addressToEdit = addresses.find(address => address.id === addressId);
                 if (addressToEdit) {

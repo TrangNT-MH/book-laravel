@@ -15,12 +15,13 @@ class ShoppingCartRepository extends EloquentRepository
         return ShoppingCart::class;
     }
 
-    public function cart($identifier): void
+    public function cart($identifier)
     {
 //        dd($identifier);
-        $a = $this->model->where([
+        $stored = $this->model->where([
             'identifier' => $identifier,
             'instance' => 'cart'
-        ])->get();
+        ])->first();
+        return unserialize($stored->content);
     }
 }

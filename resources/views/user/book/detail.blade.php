@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layouts.user_type.auth')
 @push('style')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
@@ -66,14 +66,16 @@
                     <input type="text" id="quantity"
                            class="quantity-input" size="10" value="1" onkeypress="return isNumberKey(event)"/>
                     <button type="button" class="btn btn-icon btn-increase" data-book-id="{{ $book->id }}">
-                        <i class="icon-plus text-danger"    ></i>
+                        <i class="icon-plus text-danger"></i>
                     </button>
                 </div>
                 <div class="price my-2">
                     <h6><strong>Price</strong></h6>
                     <h4>{{ $book->price }}$</h4>
                 </div>
-                <button type="button" class="btn btn-danger btn-detail-add-to-cart btn-icon-text w-100 my-2" data-book-id="{{ $book->id }}">Add To Cart</button>
+                <button type="button" class="btn btn-danger btn-detail-add-to-cart btn-icon-text w-100 my-2"
+                        data-book-id="{{ $book->id }}">Add To Cart
+                </button>
                 <a href="{{ route('user.cart.checkout') }}" class="btn btn-outline-danger btn-buy w-100">Buy Now</a>
             </div>
         </div>

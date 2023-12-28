@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layouts.user_type.guest')
 @section('content')
     <div class="container-scroller">
         <div class="container-fluid page-body-wrapper full-page-wrapper">
@@ -14,14 +14,16 @@
                                 @csrf
                                 <input type="hidden" name="token" value="{{ $token }}">
                                 <div class="form-group">
-                                    <input type="password" name="password" class="form-control form-control-lg" id="password"
+                                    <input type="password" name="password" class="form-control form-control-lg"
+                                           id="password"
                                            placeholder="Password">
                                     @if ($errors->has('password'))
                                         <span class="text-danger">{{ $errors->first('password') }}</span>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="password_confirmation" class="form-control form-control-lg" id="password_confirmation"
+                                    <input type="password" name="password_confirmation"
+                                           class="form-control form-control-lg" id="password_confirmation"
                                            placeholder="Confirm Password">
                                     @if ($errors->has('password_confirmation'))
                                         <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>

@@ -61,9 +61,6 @@ class LoginRegisterController extends Controller
                 return redirect()->intended('admin/dashboard');
             }
             $storedCart = $this->shoppingCartRepository->cart(Auth::user()->getAuthIdentifier());
-//            dd($storedCart);
-
-            $storedCart = unserialize($storedCart);
 
             if ($storedCart) {
                 foreach ($storedCart as $item) {
@@ -94,7 +91,6 @@ class LoginRegisterController extends Controller
      */
     public function logout(Request $request)
     {
-//        dd(Cart::instance('cart')->content());
         Cart::instance('cart')->erase(Auth::user()->getAuthIdentifier());
         Cart::instance('cart')->store(Auth::user()->getAuthIdentifier());
         Auth::logout();

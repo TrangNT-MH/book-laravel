@@ -1,10 +1,11 @@
-@extends('layout.master')
+@extends('layouts.user_type.auth')
 @section('content')
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Adding book form</h4>
-                <form action="{{ route('admin.book.store') }}" method="post" class="forms-add-book" enctype="multipart/form-data">
+                <form action="{{ route('admin.book.store') }}" method="post" class="forms-add-book"
+                      enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="book-title">Title</label>
@@ -114,7 +115,8 @@
                     <div class="form-group">
                         <label for="book-description">Description</label>
                         <div class="col-xs-12">
-                            <textarea class="tinymce-editor" id="book-description" name="description" rows="10" cols="100%">
+                            <textarea class="tinymce-editor" id="book-description" name="description" rows="10"
+                                      cols="100%">
                             </textarea>
                             @if($errors->has('description'))
                                 <span class="text-danger">{{ $errors->first('description') }}</span>
@@ -131,7 +133,8 @@
 @push('script')
     <script src="{{ asset('js/preview-img.js') }}"></script>
     <script src="{{ asset('js/typeahead.js') }}"></script>
-    <script src="https://cdn.tiny.cloud/1/vtnpapyjs714lk82gotpdtdz9wwz9maf1g6vbdl0g3yerqbt/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/vtnpapyjs714lk82gotpdtdz9wwz9maf1g6vbdl0g3yerqbt/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
 
     <script type="text/javascript">
         tinymce.init({

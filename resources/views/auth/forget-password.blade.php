@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layouts.user_type.guest')
 @section('content')
     <div class="container-scroller">
         <div class="container-fluid page-body-wrapper full-page-wrapper">
@@ -14,7 +14,8 @@
                             <form class="pt-3" method="post" action="{{ route('password.request') }}">
                                 @csrf
                                 <div class="form-group">
-                                    <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1"
+                                    <input type="email" name="email" class="form-control form-control-lg"
+                                           id="exampleInputEmail1"
                                            placeholder="Email">
                                     @if($errors->has('email'))
                                         <span class="text text-danger">{{ $errors->first('email') }}</span>

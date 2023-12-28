@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layouts.user_type.auth')
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/liveSearch.css') }}">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -22,8 +22,10 @@
                         <div class="col-md-4 book-status">
                             <select id="bookStatus" class="form-control text-capitalize">
                                 <option value="">Status</option>
-                                <option value="1" {{ request()->get('is_active') == 1 ? "selected" : "" }}>Active</option>
-                                <option value="2" {{ request()->get('is_active') == 2 ? "selected" : "" }}>Inactive</option>
+                                <option value="1" {{ request()->get('is_active') == 1 ? "selected" : "" }}>Active
+                                </option>
+                                <option value="2" {{ request()->get('is_active') == 2 ? "selected" : "" }}>Inactive
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -124,15 +126,14 @@
                 }
             });
 
-            function getParams()
-            {
+            function getParams() {
                 let limit = $('#limit').find(":selected").val();
                 let key = '{{ request()->get('key') ?? '' }}';
                 let status = $('#bookStatus').find(":selected").val();
                 return {
-                    'key' : key,
-                    'limit' : limit,
-                    'is_active' : status
+                    'key': key,
+                    'limit': limit,
+                    'is_active': status
                 }
             }
 

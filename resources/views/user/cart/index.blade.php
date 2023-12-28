@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layouts.user_type.auth')
 @push('style')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -50,7 +50,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-inverse-danger btn-icon"><i
-                                                class="icon-trash"></i></button>
+                                                    class="icon-trash"></i></button>
                                     </form>
                                 </div>
                             </div>

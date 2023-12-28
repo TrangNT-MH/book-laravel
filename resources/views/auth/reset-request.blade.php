@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layouts.user_type.guest')
 @section('content')
     <body>
     <div class="container-scroller">
@@ -15,10 +15,11 @@
                                             {{ $message }}
                                         </div>
                                     @endif
-                                    Before proceeding, please check your email for a resetting password link.<br> If you did not receive the email,
+                                    Before proceeding, please check your email for a resetting password link.<br> If you
+                                    did not receive the email,
                                     <form class="d-inline" method="POST" action="{{ route('password.resend') }}">
                                         @csrf
-                                        <input name="token" type="hidden" value = {{ $token  }}>
+                                        <input name="token" type="hidden" value= {{ $token  }}>
                                         <button type="submit" class="btn btn-link p-0 m-0 align-baseline">
                                             click here to request another
                                         </button>
