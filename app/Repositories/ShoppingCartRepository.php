@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Models\ShoppingCart;
 use App\Repositories\EloquentRepository;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Collection;
 
 class ShoppingCartRepository extends EloquentRepository
 {
@@ -13,11 +15,12 @@ class ShoppingCartRepository extends EloquentRepository
         return ShoppingCart::class;
     }
 
-    function content($identifier)
+    public function cart($identifier): void
     {
-        $this->model->where([
+//        dd($identifier);
+        $a = $this->model->where([
             'identifier' => $identifier,
             'instance' => 'cart'
-        ])->value('content');
+        ])->get();
     }
 }

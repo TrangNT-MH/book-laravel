@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Genre;
 use App\Models\User;
 use App\Models\UsersRole;
 use Illuminate\Database\Seeder;
@@ -21,12 +22,14 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call([
-            UserSeeder::class,
+//            UserSeeder::class,
 //            BookSeeder::class,
 //            RoleSeeder::class,
 //            UserSeeder::class,
-            PermissionSeeder::class,
-            RoleSeeder::class
+//            PermissionSeeder::class,
+//            RoleSeeder::class
+//            CategorySeeder::class,
+            GenreSeeder::class
         ]);
     }
 }

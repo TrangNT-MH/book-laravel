@@ -19,7 +19,7 @@ gulp.task('buildBaseVendorScripts', function() {
         './node_modules/bootstrap/dist/js/bootstrap.min.js',
         './node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js'
     ])
-      .pipe(concat('vendor.bundle.base.js'))
+      .pipe(concat('vendor_bundle_base.js'))
       .pipe(gulp.dest('./vendors/js'));
 });
 

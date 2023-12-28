@@ -13,17 +13,26 @@ class Book extends Model
     use HasFactory;
 
     protected $fillable = [
+        'isbn',
         'title',
-        'isbn10',
-        'author',
-        'publication_date',
+        'authors',
         'price',
+        'description',
+        'page_count',
+        'publisher',
+        'publish_date',
+        'language',
         'image'
     ];
 
     public function scopeFilter($query, $filter)
     {
         return $filter->apply($query);
+    }
+
+    public function genre()
+    {
+        return $this->belongsToMany(Genre::class);
     }
 
     public function insert($data)

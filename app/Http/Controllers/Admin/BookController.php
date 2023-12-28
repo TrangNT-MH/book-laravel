@@ -7,6 +7,8 @@ use App\Http\Requests\AddBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use App\Repositories\BookRepository;
+use App\Repositories\CategoryRepository;
+use App\Repositories\GenreRepository;
 use Exception;
 use Illuminate\Container\RewindableGenerator;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,14 +16,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use function MongoDB\BSON\toJSON;
 
 class BookController extends Controller
 {
     protected BookRepository $bookRepository;
+    protected CategoryRepository $categoryRepository;
+    protected GenreRepository $genreRepository;
 
-    public function __construct(BookRepository $bookRepository)
+    public function __construct(BookRepository $bookRepository, CategoryRepository $categoryRepository, GenreRepository $genreRepository)
     {
         $this->bookRepository = $bookRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->genreRepository = $genreRepository;
     }
 
     public function index(Request $request)
@@ -74,7 +81,17 @@ class BookController extends Controller
 
     public function create()
     {
-        return view('admin.book.store');
+        $categoryIDs = $this->categoryRepository->allID();
+
+        $allGenres = [];
+        foreach ($categoryIDs as $id) {
+            $allGenres[] = [
+                'category' => $this->categoryRepository->name($id),
+                'genres' =>   $this->genreRepository->genres($id)
+                ];
+        }
+
+        return view('admin.book.store', compact('allGenres'));
     }
 
     public function store(AddBookRequest $request)

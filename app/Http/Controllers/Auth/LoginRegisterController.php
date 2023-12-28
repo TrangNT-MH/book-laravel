@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginRegisterController extends Controller
 {
-    protected $shoppingCartRepository;
+    protected ShoppingCartRepository $shoppingCartRepository;
 
     public function __construct(ShoppingCartRepository $shoppingCartRepository)
     {
@@ -60,8 +60,8 @@ class LoginRegisterController extends Controller
             if (Auth::user()->hasRole('admin')) {
                 return redirect()->intended('admin/dashboard');
             }
-
-            $storedCart = $this->shoppingCartRepository->content(Auth::user()->getAuthIdentifier());
+            $storedCart = $this->shoppingCartRepository->cart(Auth::user()->getAuthIdentifier());
+//            dd($storedCart);
 
             $storedCart = unserialize($storedCart);
 

@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Adding book form</h4>
-                <form action="" method="post" class="forms-add-book" enctype="multipart/form-data" autocomplete="off">
+                <form action="{{ route('admin.book.store') }}" method="post" class="forms-add-book" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="book-title">Title</label>
@@ -15,7 +15,7 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="book-isbn">ISBN 10</label>
+                        <label for="book-isbn">ISBN</label>
                         <input type="text" class="form-control" id="book-isbn" name="isbn"
                                placeholder="ISBN">
                         @if ($errors->has('isbn'))
@@ -47,11 +47,45 @@
                         @endif
                     </div>
                     <div class="form-group">
+                        <label>Category</label>
+                        <select class="js-example-basic-multiple select2-hidden-accessible" multiple="" name="genres[]"
+                                style="width:100%" data-select2-id="4" tabindex="-1" aria-hidden="true">
+                            @foreach($allGenres as $values)
+                                <optgroup label="{{ $values['category'] }}">
+                                    @foreach($values['genres'] as $value)
+                                        <option value="{{ $value }}">{{ $value }}</option>
+                                    @endforeach
+                                    <option></option>
+                                </optgroup>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('genres'))
+                            <span class="text-danger">{{ $errors->first('genres') }}</span>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="book-language">Pages number</label>
+                        <input type="text" class="form-control" id="book-pages-number" name="page_count"
+                               placeholder="Pages Number">
+                        @if ($errors->has('page_count'))
+                            <span class="text-danger">{{ $errors->first('page_count') }}</span>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="book-language">Language</label>
+                        <input type="text" class="form-control" id="book-language" name="language"
+                               placeholder="Language">
+                        @if ($errors->has('language'))
+                            <span class="text-danger">{{ $errors->first('language') }}</span>
+                        @endif
+                    </div>
+                    <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-primary text-white">$</span>
                             </div>
-                            <input type="text" class="form-control" name="price" aria-label="Amount (to the nearest dollar)">
+                            <input type="text" class="form-control" name="price"
+                                   aria-label="Amount (to the nearest dollar)">
                             <div class="input-group-append">
                                 <span class="input-group-text">.00</span>
                             </div>
@@ -74,10 +108,18 @@
                         @if ($errors->has('image'))
                             <span class="text-danger">{{ $errors->first('image') }}</span>
                         @endif
-                        <img id="image-preview" src="#" alt="Image Preview" style=" display:none; max-width: 100%; max-height: 200px;">
+                        <img id="image-preview" src="#" alt="Image Preview"
+                             style=" display:none; max-width: 100%; max-height: 200px;">
                     </div>
-                    <div>
-
+                    <div class="form-group">
+                        <label for="book-description">Description</label>
+                        <div class="col-xs-12">
+                            <textarea class="tinymce-editor" id="book-description" name="description" rows="10" cols="100%">
+                            </textarea>
+                            @if($errors->has('description'))
+                                <span class="text-danger">{{ $errors->first('description') }}</span>
+                            @endif
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-light" onclick="window.history.go(-1); return false;">Cancel</button>
@@ -88,4 +130,24 @@
 @endsection
 @push('script')
     <script src="{{ asset('js/preview-img.js') }}"></script>
+    <script src="{{ asset('js/typeahead.js') }}"></script>
+    <script src="https://cdn.tiny.cloud/1/vtnpapyjs714lk82gotpdtdz9wwz9maf1g6vbdl0g3yerqbt/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script type="text/javascript">
+        tinymce.init({
+            selector: 'textarea.tinymce-editor',
+            height: 300,
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount', 'image'
+            ],
+            toolbar: 'undo redo | formatselect | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_css: '//www.tiny.cloud/css/codepen.min.css'
+        });
+    </script>
 @endpush

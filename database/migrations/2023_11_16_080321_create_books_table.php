@@ -22,9 +22,8 @@ return new class extends Migration
             $table->decimal('price');
             $table->longText('description');
             $table->string('publisher');
-            $table->string('category');
             $table->integer('page_count');
-            $table->date('publish_date')->default('2023-03-05');
+            $table->date('publish_date');
             $table->string('language');
             $table->timestamps();
         });

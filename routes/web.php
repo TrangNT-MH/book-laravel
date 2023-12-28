@@ -55,8 +55,8 @@ Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
         Route::prefix('/book')->group(function () {
             Route::get('/index', [AdminBookController::class, 'index'])->name('admin.book.index');
-            Route::get('/store', [AdminBookController::class, 'create'])->name('admin.book.create');
-            Route::post('/storeAdd', [AdminBookController::class, 'store'])->name('admin.book.store');
+            Route::get('/create', [AdminBookController::class, 'create'])->name('admin.book.create');
+            Route::post('/store', [AdminBookController::class, 'store'])->name('admin.book.store');
             Route::post('/index', [AdminBookController::class, 'index']);
             Route::get('/detail/{id}', [AdminBookController::class, 'detail'])->name('admin.book.detail');
             Route::put('/detail/{id}', [AdminBookController::class, 'edit'])->name('admin.book.edit');

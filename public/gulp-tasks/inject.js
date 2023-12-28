@@ -28,7 +28,7 @@ gulp.task('injectAssets', function () {
             './vendors/simple-line-icons/css/simple-line-icons.css',
             './vendors/flag-icon-css/css/flag-icon.min.css',
             './vendors/css/vendor_bundle_base.css',
-            './vendors/js/vendor.bundle.base.js',
+            './vendors/js/vendor_bundle_base.js',
         ], {
             read: false
         }), {
