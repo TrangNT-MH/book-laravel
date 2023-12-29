@@ -10,7 +10,7 @@
                     <div class="form-group">
                         <label for="book-title">Title</label>
                         <input type="text" class="form-control" id="book-title" name="title"
-                               placeholder="Title" autocomplete="on">
+                               placeholder="Title" autocomplete="on" value="{{ old('title') }}">
                         @if ($errors->has('title'))
                             <span class="text-danger">{{ $errors->first('title') }}</span>
                         @endif
@@ -18,7 +18,7 @@
                     <div class="form-group">
                         <label for="book-isbn">ISBN</label>
                         <input type="text" class="form-control" id="book-isbn" name="isbn"
-                               placeholder="ISBN">
+                               placeholder="ISBN" value="{{ old('isbn') }}">
                         @if ($errors->has('isbn'))
                             <span class="text-danger">{{ $errors->first('isbn') }}</span>
                         @endif
@@ -26,7 +26,7 @@
                     <div class="form-group">
                         <label for="book-author">Author</label>
                         <input type="text" class="form-control" id="book-author" name="authors"
-                               placeholder="Author">
+                               placeholder="Author" value="{{ old('authors') }}">
                         @if ($errors->has('authors'))
                             <span class="text-danger">{{ $errors->first('authors') }}</span>
                         @endif
@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <label for="book-publisher">Publisher</label>
                         <input type="text" class="form-control" id="book-publisher" name="publisher"
-                               placeholder="Publisher">
+                               placeholder="Publisher" value="{{ old('publisher') }}">
                         @if ($errors->has('publisher'))
                             <span class="text-danger">{{ $errors->first('publisher') }}</span>
                         @endif
@@ -42,7 +42,7 @@
                     <div class="form-group">
                         <label for="book-publication-date">Publication Date</label>
                         <input type="date" class="form-control" id="book-publication-date" name="publish_date"
-                               placeholder="Publication Date">
+                               placeholder="Publication Date" value="{{ old('publish_date') }}">
                         @if ($errors->has('publish_date'))
                             <span class="text-danger">{{ $errors->first('publish_date') }}</span>
                         @endif
@@ -54,7 +54,7 @@
                             @foreach($allGenres as $values)
                                 <optgroup label="{{ $values['category'] }}">
                                     @foreach($values['genres'] as $value)
-                                        <option value="{{ $value }}">{{ $value }}</option>
+                                        <option value="{{ $value }}" {{ (collect(old('genres'))->contains($value)) ? 'selected' : '' }}>{{ $value }}</option>
                                     @endforeach
                                     <option></option>
                                 </optgroup>
@@ -66,8 +66,8 @@
                     </div>
                     <div class="form-group">
                         <label for="book-language">Pages number</label>
-                        <input type="text" class="form-control" id="book-pages-number" name="page_count"
-                               placeholder="Pages Number">
+                        <input type="number" class="form-control" id="book-pages-number" name="page_count"
+                               placeholder="Pages Number" value="{{ old('page_count') }}">
                         @if ($errors->has('page_count'))
                             <span class="text-danger">{{ $errors->first('page_count') }}</span>
                         @endif
@@ -75,7 +75,7 @@
                     <div class="form-group">
                         <label for="book-language">Language</label>
                         <input type="text" class="form-control" id="book-language" name="language"
-                               placeholder="Language">
+                               placeholder="Language" value="{{ old('language') }}">
                         @if ($errors->has('language'))
                             <span class="text-danger">{{ $errors->first('language') }}</span>
                         @endif
@@ -86,7 +86,7 @@
                                 <span class="input-group-text bg-primary text-white">$</span>
                             </div>
                             <input type="text" class="form-control" name="price"
-                                   aria-label="Amount (to the nearest dollar)">
+                                   aria-label="Amount (to the nearest dollar)" value="{{ old('price') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">.00</span>
                             </div>
@@ -115,8 +115,8 @@
                     <div class="form-group">
                         <label for="book-description">Description</label>
                         <div class="col-xs-12">
-                            <textarea class="tinymce-editor" id="book-description" name="description" rows="10"
-                                      cols="100%">
+                            <textarea class="tinymce-editor" id="book-description" name="description" rows="10" cols="100%">
+                                {{ old('description') }}
                             </textarea>
                             @if($errors->has('description'))
                                 <span class="text-danger">{{ $errors->first('description') }}</span>

@@ -16,6 +16,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNull;
 
 class LoginRegisterController extends Controller
 {
@@ -91,8 +93,10 @@ class LoginRegisterController extends Controller
      */
     public function logout(Request $request)
     {
-        Cart::instance('cart')->erase(Auth::user()->getAuthIdentifier());
-        Cart::instance('cart')->store(Auth::user()->getAuthIdentifier());
+        if (Cart::instance('cart')->content()->first()) {
+            Cart::instance('cart')->erase(Auth::user()->getAuthIdentifier());
+            Cart::instance('cart')->store(Auth::user()->getAuthIdentifier());
+        }
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

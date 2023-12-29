@@ -33,4 +33,6 @@ class UserRepository extends EloquentRepository
                 'password' => $password
             ]);
     }
+
+
 }

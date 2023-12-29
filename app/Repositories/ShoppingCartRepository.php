@@ -17,11 +17,14 @@ class ShoppingCartRepository extends EloquentRepository
 
     public function cart($identifier)
     {
-//        dd($identifier);
         $stored = $this->model->where([
             'identifier' => $identifier,
             'instance' => 'cart'
         ])->first();
-        return unserialize($stored->content);
+        if ($stored) {
+            return unserialize($stored->content);
+        } else {
+            return null;
+        }
     }
 }

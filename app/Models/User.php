@@ -54,6 +54,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Address::class);
     }
 
+    public function user_infos()
+    {
+        return $this->hasOne(UserInfo::class);
+    }
 //    public function updatePassword($email, $password)
 //    {
 //        return DB::table(self::__TABLE)

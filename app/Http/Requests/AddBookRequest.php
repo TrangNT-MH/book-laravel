@@ -30,7 +30,7 @@ class AddBookRequest extends FormRequest
             'price' => 'bail|required|decimal:2',
             'description' => 'bail|required|string',
             'publisher' => 'bail|required|string',
-            'genres' => 'bail|required',
+            'genres[]' => 'bail|required',
             'page_count' => 'bail|required|string',
             'publish_date' => 'bail|required',
             'language' => 'bail|required',

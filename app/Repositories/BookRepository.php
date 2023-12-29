@@ -24,15 +24,6 @@ class BookRepository extends EloquentRepository
 
     public function create($data)
     {
-//        $book = new Book();
-////        dd($book);
-//        try {
-//            $book->create($data);
-//        } catch (\Exception $exception) {
-//            dd($exception->getMessage());
-//        }
-////        $book->save($data);
-////        dd($data);
         return $this->model->create([
             'isbn' => $data['isbn'],
             'title' => $data['title'],

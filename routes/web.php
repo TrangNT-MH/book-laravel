@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\Admin\BookController as AdminBookController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\UserController as UserAdminController;
 use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\User\BookController as UserBookController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -62,9 +63,9 @@ Route::group(['middleware' => ['role:admin']], function () {
             Route::put('/detail/{id}', [AdminBookController::class, 'edit'])->name('admin.book.edit');
             Route::put('/update-status/{id}/{status}', [AdminBookController::class, 'updateStatus'])->name('admin.book.status');
         });
-        Route::get('/index', [UserController::class, 'index'])->name('admin.index');
-        Route::get('/detail/{id}', [UserController::class, 'detail'])->name('admin.detail');
-        Route::get('/search', [UserController::class, 'search'])->name('admin.search');
+        Route::get('/index', [UserAdminController::class, 'index'])->name('admin.index');
+        Route::get('/detail/{id}', [UserAdminController::class, 'detail'])->name('admin.detail');
+        Route::get('/search', [UserAdminController::class, 'search'])->name('admin.search');
     });
 });
 
@@ -79,5 +80,6 @@ Route::group(['middleware' => ['role:user|admin']], function () {
     Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('user.cart.checkout');
     Route::post('/cart/checkout', [CartController::class, 'storeAddress'])->name('user.cart.checkout.storeAddress');
     Route::delete('cart/checkout/{id}', [CartController::class, 'delAddress'])->name('user.cart.checkout.delAddress');
+    Route::get('/my-profile/{id}', [UserController::class, 'profile'])->name('user.profile');
 });
 

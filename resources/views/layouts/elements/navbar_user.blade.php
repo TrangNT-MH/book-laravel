@@ -40,7 +40,7 @@
                         <p class="mb-1 mt-3">{{ auth()->user()->name }}</p>
                         <p class="font-weight-light text-muted mb-0">{{ auth()->user()->email }}</p>
                     </div>
-                    <a class="dropdown-item">
+                    <a href="{{ route('user.profile', auth()->user()->getAuthIdentifier()) }}" class="dropdown-item">
                         <i class="dropdown-item-icon icon-user text-primary"></i> My Profile
                     </a>
 {{--                    <a class="dropdown-item"><i class="dropdown-item-icon icon-speech text-primary"></i> Messages</a>--}}
