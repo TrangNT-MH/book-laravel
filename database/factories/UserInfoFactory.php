@@ -22,7 +22,6 @@ class UserInfoFactory extends Factory
         $gender = fake()->randomElement(['male', 'female']);
         return [
             'user_id' => fake()->unique()->randomElement($user_id),
-            'avatar' => fake()->image('public/images/faces'),
             'phoneNumber' => fake()->phoneNumber(),
             'gender' => $gender,
             'dob' => fake()->date($max = '2010-12-30')

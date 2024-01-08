@@ -81,5 +81,7 @@ Route::group(['middleware' => ['role:user|admin']], function () {
     Route::post('/cart/checkout', [CartController::class, 'storeAddress'])->name('user.cart.checkout.storeAddress');
     Route::delete('cart/checkout/{id}', [CartController::class, 'delAddress'])->name('user.cart.checkout.delAddress');
     Route::get('/my-profile/{id}', [UserController::class, 'profile'])->name('user.profile');
+    Route::post('/my-profile/{id}', [UserController::class, 'updateProfile'])->name('user.updateProfile');
+    Route::get('/change-password', [UserController::class, 'changPassword'])->name('user.changePassword');
 });
 

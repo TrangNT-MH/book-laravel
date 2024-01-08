@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use App\Models\UserInfo;
 use Database\Factories\UserInfoFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -14,6 +15,7 @@ class UserInfoSeeder extends Seeder
      */
     public function run(): void
     {
-        UserInfo::factory()->count(7)->create();
+        $user = count(User::all());
+        UserInfo::factory()->count($user)->create();
     }
 }

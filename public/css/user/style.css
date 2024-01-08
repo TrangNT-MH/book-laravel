@@ -352,3 +352,34 @@
     padding: 50px;
     border-radius: 10px;
 }
+
+.user-profile-wrapper .list-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.user-profile-wrapper .list-item .info {
+    display: flex;
+}
+
+.user-profile-wrapper .list-item .info .detail {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-profile-wrapper .list-item .info .detail .title {
+    color: #1d6b1f;
+    font-size: 15px;
+}
+
+.user-profile-wrapper .list-item .info .detail .content {
+    color: gray;
+    font-size: 15px;
+}
+
+.user-profile-wrapper .list-item .info i {
+    font-size: 25px;
+    margin-right: 10px;
+    align-self: center;
+}

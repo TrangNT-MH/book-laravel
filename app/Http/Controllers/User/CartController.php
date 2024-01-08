@@ -51,10 +51,6 @@ class CartController extends Controller
 
     public function storeAddress(AddressRequest $request)
     {
-//        if($request->validated()->fails())
-//        {
-//            return false;
-//        } else {
         $id = Auth::user()->getAuthIdentifier();
         $data = [
             "user_id" => $id,

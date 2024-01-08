@@ -13,9 +13,11 @@ use function MongoDB\BSON\toJSON;
 class UserController extends Controller
 {
     protected UserInfoRepository $userInfoRepository;
+    protected UserRepository $userRepository;
     public function __construct()
     {
         $this->userInfoRepository = new UserInfoRepository();
+        $this->userRepository = new UserRepository();
     }
     public function index()
     {
@@ -24,8 +26,19 @@ class UserController extends Controller
 
     public function profile($id)
     {
+        $user = $this->userInfoRepository->find($id)->users()->get()->first()->toArray();
         $userInfo = $this->userInfoRepository->find($id)->toArray();
-//        dd($userInfo);
-        return view('user.user-info', compact('userInfo'));
+        $addresses = $this->userRepository->addresses($id);
+        return view('user.user-info.user-info', compact('user','userInfo', 'addresses'));
+    }
+
+    public function changPassword()
+    {
+        return view('user.user-info.change-password');
+    }
+
+    public function updateProfile(Request $request)
+    {
+
     }
 }

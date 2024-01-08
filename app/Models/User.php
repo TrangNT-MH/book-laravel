@@ -56,7 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function user_infos()
     {
-        return $this->hasOne(UserInfo::class);
+        return $this->belongsTo(UserInfo::class);
     }
 //    public function updatePassword($email, $password)
 //    {

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_infos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('avatar');
+            $table->string('avatar')->default('images/faces/default.png');
             $table->string('phoneNumber')->unique();
             $table->string('gender');
             $table->date('dob');

@@ -34,5 +34,8 @@ class UserRepository extends EloquentRepository
             ]);
     }
 
-
+    public function user_info()
+    {
+        return $this->model->user_infos();
+    }
 }
