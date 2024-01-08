@@ -37,54 +37,73 @@
                 <div class="col-lg-5">
                     <div class="card mb-4">
                         <div class="card-body">
-                                <form method="post">
-                                    @csrf
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="inputFullName">Full Name</label>
-                                        <input class="form-control" id="inputFullName" type="text"
-                                               placeholder="Enter your full name" value="{{ $user['name'] }}">
+                            <form method="POST" action="{{ route('user.updateProfile', $user['id']) }}">
+                                @method('PUT')
+                                @csrf
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputFullName">Full Name</label>
+                                    <input class="form-control" id="inputFullName" type="text" name="name"
+                                           placeholder="Enter your full name" value="{{ $user['name'] }}">
+                                    @if($errors->has('name'))
+                                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                                    @endif
+                                </div>
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputPhone">Phone number</label>
+                                        <input class="form-control" id="inputPhone" type="tel"
+                                               placeholder="Enter your phone number" name="phoneNumber"
+                                               value="{{ $userInfo['phoneNumber'] }}">
+                                        @if($errors->has('phoneNumber'))
+                                            <span class="text-danger">{{ $errors->first('phoneNumber') }}</span>
+                                        @endif
                                     </div>
-                                    <div class="row gx-3 mb-3">
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputPhone">Phone number</label>
-                                            <input class="form-control" id="inputPhone" type="tel"
-                                                   placeholder="Enter your phone number"
-                                                   value="{{ $userInfo['phoneNumber'] }}">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                            <input class="form-control" id="inputBirthday" type="date" name="birthday"
-                                                   placeholder="Enter your birthday" value="{{ $userInfo['dob'] }}">
-                                        </div>
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputBirthday">Birthday</label>
+                                        <input class="form-control" id="inputBirthday" type="date" name="dob"
+                                               placeholder="Enter your birthday" value="{{ $userInfo['dob'] }}">
+                                        @if($errors->has('dob'))
+                                            <span class="text-danger">{{ $errors->first('dob') }}</span>
+                                        @endif
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="inputPhone">Gender</label>
-                                        <div class="row form-group justify-content-around">
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" name="gender"
-                                                           id="optionsRadios1" value="male" {{ $userInfo['gender'] == "male" ? "checked" : "" }}> Male
-                                                    <i class="input-helper"></i>
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" name="gender"
-                                                           id="optionsRadios2" value="female" {{ $userInfo['gender'] == "female" ? "checked" : "" }}> Female
-                                                    <i class="input-helper"></i>
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" name="gender"
-                                                           id="optionsRadios3" value="other" {{ $userInfo['gender'] == "other" ? "checked" : "" }}> Other
-                                                    <i class="input-helper"></i>
-                                                </label>
-                                            </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputPhone">Gender</label>
+                                    <div class="row form-group justify-content-around">
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" name="gender"
+                                                       id="optionsRadios1"
+                                                       value="male" {{ $userInfo['gender'] == "male" ? "checked" : "" }}>
+                                                Male
+                                                <i class="input-helper"></i>
+                                            </label>
                                         </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" name="gender"
+                                                       id="optionsRadios2"
+                                                       value="female" {{ $userInfo['gender'] == "female" ? "checked" : "" }}>
+                                                Female
+                                                <i class="input-helper"></i>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" name="gender"
+                                                       id="optionsRadios3"
+                                                       value="other" {{ $userInfo['gender'] == "other" ? "checked" : "" }}>
+                                                Other
+                                                <i class="input-helper"></i>
+                                            </label>
+                                        </div>
+                                        @if($errors->has('gender'))
+                                            <span class="text-danger">{{ $errors->first('gender') }}</span>
+                                        @endif
                                     </div>
-                                    <button class="btn btn-primary" type="button">Save changes</button>
-                                </form>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </form>
                         </div>
                     </div>
                     <div class="row">
@@ -95,22 +114,28 @@
                                     @if(!empty($addresses))
                                         @foreach($addresses as $address)
                                             <div class="address mb-4">
-                                                        <span class="small font-weight-bold text-danger">{{ $address['is_default']  === 1 ? 'Default' : 'Other' }}</span>
-                                                        <div class="bg-white addresses-item shadow-sm border">
-                                                            <div class="gold-members p-4 d-flex justify-content-between align-items-center">
-                                                                <p class="m-0">{{ $address['address_detail'] . ', ' . $address['ward'] . ', ' . $address['district'] . ', ' . $address['province'] }}</p>
-                                                                <div class="edit-delete">
-                                                                    <button type="button" class="btn btn-delete-address btn-icon" data-address-id="{{ $address['id'] }}"
-                                                                        {{ $address['is_default'] === 1 ? 'disabled' : '' }}>
-                                                                        <i class="icon icon-trash"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
+                                                <span
+                                                    class="small font-weight-bold text-danger">{{ $address['is_default']  === 1 ? 'Default' : 'Other' }}</span>
+                                                <div class="bg-white addresses-item shadow-sm border">
+                                                    <div
+                                                        class="gold-members p-4 d-flex justify-content-between align-items-center">
+                                                        <p class="m-0">{{ $address['address_detail'] . ', ' . $address['ward'] . ', ' . $address['district'] . ', ' . $address['province'] }}</p>
+                                                        <div class="edit-delete">
+                                                            <button type="button"
+                                                                    class="btn btn-delete-address btn-icon"
+                                                                    data-address-id="{{ $address['id'] }}"
+                                                                {{ $address['is_default'] === 1 ? 'disabled' : '' }}>
+                                                                <i class="icon icon-trash"></i>
+                                                            </button>
                                                         </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         @endforeach
                                     @endif
-                                    <button type="button" class="btn btn-outline-primary btn-modal w-100" data-toggle="modal" data-target="#addressModal">Add New Address</button>
+                                    <button type="button" class="btn btn-outline-primary btn-modal w-100"
+                                            data-toggle="modal" data-target="#addressModal">Add New Address
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -128,7 +153,9 @@
                                     </div>
                                 </div>
                                 <div class="status">
-                                    <button class="btn btn-outline-primary p-2">Update</button>
+                                    <button class="btn btn-outline-primary p-2"
+                                            onclick="window.location='{{ route('user.changeEmail') }}'">Update
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -138,10 +165,12 @@
                             <div class="list-item">
                                 <div class="info align-items-center">
                                     <i class="icon icon-lock"></i>
-                                        <span class="title">Change Password</span>
+                                    <span class="title">Change Password</span>
                                 </div>
                                 <div class="status">
-                                    <button class="btn btn-outline-primary p-2" onclick="window.location='{{ route('user.changePassword') }}'">Update</button>
+                                    <button class="btn btn-outline-primary p-2"
+                                            onclick="window.location='{{ route('user.changePassword') }}'">Update
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -203,7 +232,8 @@
                             @endif
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Cancel
+                            </button>
                             <button type="submit" class="btn btn-primary btn-save-address" name="save-address">
                                 Save
                             </button>

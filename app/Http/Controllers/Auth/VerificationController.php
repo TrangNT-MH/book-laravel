@@ -17,7 +17,7 @@ class VerificationController extends Controller
 
     public function notice(Request $request)
     {
-        return $request->user()->hasVerifiedEmail() ? redirect()->route('user.book.index') : view('auth.verify-email');
+        return $request->user()->hasVerifiedEmail() ? redirect()->intended('user.book.index') : view('auth.verify-email');
     }
 
     public function verify(EmailVerificationRequest $request)

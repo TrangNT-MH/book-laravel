@@ -1,4 +1,8 @@
-@extends('layouts.user_type.guest')
+@if(Route::has('verify-change-email'))
+    @extends('layouts.user_type.auth')
+@else
+    @extends('layouts.user_type.guest')
+@endif
 @section('content')
     <body>
     <div class="container-scroller">
@@ -18,8 +22,7 @@
                                         </div>
                                     @endif
                                     Before proceeding, please check your email for a verification link. If you did not
-                                    receive the
-                                    email,
+                                    receive the email,
                                     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                                         @csrf
                                         <button type="submit" class="btn btn-link p-0 m-0 align-baseline">

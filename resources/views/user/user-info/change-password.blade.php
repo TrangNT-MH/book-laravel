@@ -14,7 +14,14 @@
                 </div>
             </div>
             <div class="row">
-
+                <div class="mb-3">
+                    <label class="small mb-1" for="inputFullName">Full Name</label>
+                    <input class="form-control" id="inputFullName" type="text" name="name"
+                           placeholder="Enter your full name" value="{{ $user['name'] }}">
+                    @if($errors->has('name'))
+                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

@@ -92,6 +92,7 @@ class ForgetPasswordController extends Controller
             $message->to($email);
             $message->subject('Reset Password');
         });
+
         return redirect()->route('password.resend.request', $token)
             ->withSuccess('Have already send a request password link successfully');
     }

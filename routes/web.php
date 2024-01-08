@@ -81,7 +81,11 @@ Route::group(['middleware' => ['role:user|admin']], function () {
     Route::post('/cart/checkout', [CartController::class, 'storeAddress'])->name('user.cart.checkout.storeAddress');
     Route::delete('cart/checkout/{id}', [CartController::class, 'delAddress'])->name('user.cart.checkout.delAddress');
     Route::get('/my-profile/{id}', [UserController::class, 'profile'])->name('user.profile');
-    Route::post('/my-profile/{id}', [UserController::class, 'updateProfile'])->name('user.updateProfile');
+    Route::put('/my-profile/{id}', [UserController::class, 'updateProfile'])->name('user.updateProfile');
     Route::get('/change-password', [UserController::class, 'changPassword'])->name('user.changePassword');
+    Route::get('/change-email', [UserController::class, 'changeEmail'])->name('user.changeEmail');
+    Route::post('/verify-change-email', [UserController::class, 'verifyEmailAgain'])->name('user.verifyChangeEmail');
+    Route::get('/verify-email-change/{code}', [UserController::class, 'verifyEmailCode'])->name('user.verifyEmailCode');
+    Route::post('/check-email-code', [UserController::class, 'checkEmailCode'])->name('user.checkEmailCode');
 });
 

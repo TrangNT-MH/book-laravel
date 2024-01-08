@@ -14,7 +14,8 @@
         "laravelcollective/html": "^6.4",
         "spatie/laravel-permission": "^6.1",
         "tinymce/tinymce": "^6.8",
-        "tymon/jwt-auth": "^2.0"
+        "tymon/jwt-auth": "^2.0",
+      "ext-http": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
