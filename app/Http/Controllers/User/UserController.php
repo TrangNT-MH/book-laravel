@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Testing\Fluent\Concerns\Has;
 
 class UserController extends Controller
 {
@@ -37,9 +38,25 @@ class UserController extends Controller
         return view('user.user-info.user-info', compact('user','userInfo', 'addresses'));
     }
 
-    public function changPassword()
+    public function changePassword()
     {
         return view('user.user-info.change-password');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'password' => 'required',
+            'newPassword' => 'required|min:8',
+            'newPasswordConfirmation' => 'required|same:newPassword'
+        ]);
+
+        if (!Hash::check($request->password, auth()->user()->getAuthPassword())) {
+            return back()->with("password", "Password is wrong!!");
+        } else {
+            $this->userRepository->updatePassword(auth()->user()->getAuthIdentifier(), Hash::make($request->newPassword));
+            return back()->with("success", "Password changed successfully!");
+        }
     }
 
     public function updateProfile(ProfileRequest $request)
@@ -105,4 +122,5 @@ class UserController extends Controller
             ]);
         }
     }
+
 }

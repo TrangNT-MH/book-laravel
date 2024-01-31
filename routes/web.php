@@ -27,7 +27,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/register', [LoginRegisterController::class, 'register'])->name('register');
+Route::get('/register', [LoginRegisterController::class, 'register'])->name('register')->middleware('guest');
 Route::post('/store', [LoginRegisterController::class, 'store'])->name('store');
 Route::get('/login', [LoginRegisterController::class, 'login'])->name('login');
 Route::post('/login', [LoginRegisterController::class, 'authenticate'])->name('authenticate');
@@ -82,7 +82,8 @@ Route::group(['middleware' => ['role:user|admin']], function () {
     Route::delete('cart/checkout/{id}', [CartController::class, 'delAddress'])->name('user.cart.checkout.delAddress');
     Route::get('/my-profile/{id}', [UserController::class, 'profile'])->name('user.profile');
     Route::put('/my-profile/{id}', [UserController::class, 'updateProfile'])->name('user.updateProfile');
-    Route::get('/change-password', [UserController::class, 'changPassword'])->name('user.changePassword');
+    Route::get('/change-password', [UserController::class, 'changePassword'])->name('user.changePassword.request');
+    Route::post('/change-password', [UserController::class, 'updatePassword'])->name('user.changePassword.change');
     Route::get('/change-email', [UserController::class, 'changeEmail'])->name('user.changeEmail');
     Route::post('/verify-change-email', [UserController::class, 'verifyEmailAgain'])->name('user.verifyChangeEmail');
     Route::get('/verify-email-change/{code}', [UserController::class, 'verifyEmailCode'])->name('user.verifyEmailCode');

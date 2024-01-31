@@ -13,8 +13,8 @@ class GenreRepository extends EloquentRepository
         return Genre::class;
     }
 
-    public function genres($cate_id)
+    public function genres()
     {
-        return $this->model->where('category_id', $cate_id)->pluck('genres')->toArray();
+        return $this->model->with('categories')->get();
     }
 }

@@ -44,7 +44,9 @@
             </div>
         @endforeach
     </div>
-    {{ $books->withQueryString()->onEachSide(1)->links() }}
+    <div class="col-12">
+        {{ $books->withQueryString()->onEachSide(1)->links('user.custom-pagination') }}
+    </div>
 @endsection
 @push('script')
     <script>

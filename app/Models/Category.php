@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
-    public function genre()
+    public function genres()
     {
         return $this->hasMany(Genre::class);
     }

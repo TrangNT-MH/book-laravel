@@ -25,14 +25,25 @@ class UserRepository extends EloquentRepository
         return $this->model->where('email', $email)->first()->id;
     }
 
-    public function updatePassword($email, $password)
+    public function updatePassword($identifier, $password)
     {
-        return $this->model
-            ->where('email', $email)
-            ->update([
-                'password' => $password
-            ]);
+        if ($identifier == 'email') {
+            return $this->model
+                ->where('email', $identifier)
+                ->update([
+                    'password' => $password,
+                    'updated_at' => now()
+                ]);
+        } else {
+            return $this->model
+                ->where('id', $identifier)
+                ->update([
+                    'password' => $password,
+                    'updated_at' => now()
+                ]);
+        }
     }
+
 
     public function user_info()
     {

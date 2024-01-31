@@ -22,4 +22,20 @@ class CategoryRepository extends EloquentRepository
     {
         return $this->model->find($id)->category;
     }
+
+    public function genres()
+    {
+        $categoriesWithGenres = $this->model->with('genres')->get();
+
+        $result = [];
+
+        foreach ($categoriesWithGenres as $category) {
+            $categoryName = $category->category;
+            $genres = $category->genres->pluck('genres')->toArray();
+
+            $result[$categoryName] = $genres;
+        }
+
+        return $result;
+    }
 }

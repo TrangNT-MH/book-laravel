@@ -6,23 +6,31 @@ use App\Filters\BookFilter;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Repositories\BookRepository;
+use App\Repositories\CategoryRepository;
+use App\Repositories\GenreRepository;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
     protected BookRepository $bookRepository;
+    protected GenreRepository $genreRepository;
+    protected CategoryRepository $cateRepository;
 
-    public function __construct(BookRepository $bookRepository)
+    public function __construct(BookRepository $bookRepository, GenreRepository $genreRepository, CategoryRepository $cateRepository)
     {
         $this->bookRepository = $bookRepository;
+        $this->genreRepository = $genreRepository;
+        $this->cateRepository = $cateRepository;
     }
 
     public function index(BookFilter $filter)
     {
         $perPage  = request()->get('limit', 10);
         $books = Book::filter($filter)->paginate($perPage);
-        return view('user.book.index', compact('books'));
+
+        $allGenres = $this->cateRepository->genres();
+        return view('user.book.index', compact('books', 'allGenres'));
     }
 
     public function addToCart(Request $request, $id)
@@ -56,6 +64,8 @@ class BookController extends Controller
         } else {
             $arrCate = [];
         }
-        return view('user.book.detail', compact('book', 'arrCate'));
+
+        $allGenres = $this->cateRepository->genres();
+        return view('user.book.detail', compact('book', 'arrCate', 'allGenres'));
     }
 }

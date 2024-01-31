@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Genre extends Model
 {
     use HasFactory;
-    public function category()
+    public function categories()
     {
         return $this->belongsTo(Category::class);
     }
-    public function book()
+    public function books()
     {
         return $this->belongsToMany(Book::class);
     }
