@@ -55,11 +55,15 @@
 
                 <div class="mb-3 show-address d-flex justify-content-between">
                     <div class="address">
-                        @foreach($addresses as $address)
-                            @if($address['is_default'] == 1)
-                                {{ $address['address_detail'] . ', ' . $address['ward'] . ', ' . $address['district'] . ', ' . $address['province'] }}
-                            @endif
-                        @endforeach
+                        @if(session('address'))
+                            {{ session('address') }}
+                        @else
+                            @foreach($addresses as $address)
+                                @if($address['is_default'] == 1)
+                                    {{ $address['address_detail'] . ', ' . $address['ward'] . ', ' . $address['district'] . ', ' . $address['province'] }}
+                                @endif
+                            @endforeach
+                        @endif
                     </div>
                     <div>
                         <button type="button" class="change-address btn btn-inverse-danger btn-icon-text">Change
@@ -123,7 +127,7 @@
                     </div>
                 </div>
                 <div class="address-form modal-body" style="display: none;">
-                    <form id="form" method="post" action="{{ route('user.cart.checkout.storeAddress') }}"
+                    <form id="form" method="post" action="{{ route('user.cart.checkout.storeAddress', ['id' => $address['id']]) }}"
                           autocomplete="off">
                         @csrf
                         <div class="form-group">
@@ -179,10 +183,6 @@
                             <button type="submit" class="btn btn-primary btn-save-address" name="save-address">
                                 Save
                             </button>
-                            <button type="submit" class="btn btn-primary btn-update-address" name="save-address"
-                                    style="display: none">
-                                Update
-                            </button>
                         </div>
                     </form>
                 </div>
@@ -194,7 +194,6 @@
 @push('script')
 
     <script>
-
         $(document).ready(function () {
             let errors = @json($errors->any());
             if (errors) {
@@ -247,6 +246,12 @@
                 $('#ward').val(address.ward);
                 $('#district').val(address.district);
                 $('#province').val(address.province);
+                if (address.is_default === 1) {
+                    $('input[name="is_default"]').prop('checked', true);
+                } else {
+                    $('input[name="is_default"]').prop('checked', false);
+                }
+                $('.btn-save-address').prop('name', 'update-address');
             }
 
             $('.btn-edit-address').on('click', function () {
@@ -280,6 +285,13 @@
                     }
                 })
             })
+
+            $('.btn-choose-address').click(function () {
+                let new_address_id = $('input:radio[name=address]:checked').val();
+                let new_address = $('.box-address-' + new_address_id + ' .gold-members p').text();
+                $('.address').text(new_address);
+                $('#addressModal').modal('hide');
+            });
         })
     </script>
 @endpush

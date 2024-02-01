@@ -64,11 +64,19 @@ class CartController extends Controller
             if ($request->is_default == 1) {
                 $this->addressRepository->updateDefault($id);
             }
-            Address::updateOrCreate($data);
+
+            $address = Address::find($request->id);
+            if ($request->has('update-address')) {
+                $address->update($data);
+            } else {
+                Address::create($data);
+            }
+            $address = array_slice($data, 1, 4);
+            $address = implode(', ', $address);
+            return redirect()->back()->with('address', $address);
         } catch (\Exception $e) {
             return $e->getMessage();
         }
-        return redirect()->back();
     }
 
     public function delAddress($id, Request $request)

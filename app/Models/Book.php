@@ -32,7 +32,7 @@ class Book extends Model
 
     public function genres()
     {
-        return $this->belongsToMany(Genre::class);
+        return $this->belongsToMany(Genre::class, 'book_genres');
     }
 
     public function insert($data)
