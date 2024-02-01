@@ -25,7 +25,6 @@ class CategorySeeder extends Seeder
         Category::create(['category' => 'History']);
         Category::create(['category' => 'Culture']);
         Category::create(['category' => 'LGBT']);
-        Category::create(['category' => 'Military']);
         Category::create(['category' => 'Mystery & Detective']);
     }
 }

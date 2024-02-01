@@ -68,4 +68,15 @@ class BookController extends Controller
         $allGenres = $this->cateRepository->genres();
         return view('user.book.detail', compact('book', 'arrCate', 'allGenres'));
     }
+
+//    public function category(Request $request)
+//    {
+//        $category = $request->category;
+//        $id = $this->genreRepository->findId($category);
+//        $book = $this->genreRepository->allBook($id);
+////        dd($book);
+//
+//        $allGenres = $this->cateRepository->genres();
+//        return view('user.book.category', compact('category', 'allGenres'));
+//    }
 }

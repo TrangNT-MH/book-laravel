@@ -56,7 +56,7 @@
                 <div class="mb-3 show-address d-flex justify-content-between">
                     <div class="address">
                         @foreach($addresses as $address)
-                            @if($address['is_default'] === 1)
+                            @if($address['is_default'] == 1)
                                 {{ $address['address_detail'] . ', ' . $address['ward'] . ', ' . $address['district'] . ', ' . $address['province'] }}
                             @endif
                         @endforeach
@@ -90,18 +90,18 @@
                                    data-address-id={{ $address['id'] }}>
                                 <input type="radio" class="radio-choose-address"
                                        value="{{ $address['id'] }}"
-                                       name="address" {{ $address['is_default']  === 1 ? 'checked' : '' }}>
+                                       name="address" {{ $address['is_default']  == 1 ? 'checked' : '' }}>
                                 <div class="mb-2">
                                     <div class="bg-white addresses-item shadow-sm border">
                                         <div class="gold-members p-4">
-                                            <h6 class="mb-1">{{ $address['is_default']  === 1 ? 'Default' : 'Other' }}</h6>
+                                            <h6 class="mb-1">{{ $address['is_default']  == 1 ? 'Default' : 'Other' }}</h6>
                                             <p>{{ $address['address_detail'] . ', ' . $address['ward'] . ', ' . $address['district'] . ', ' . $address['province'] }}</p>
                                             <div class="edit-delete">
                                                 <button type="button" class="btn-edit-address"
                                                         data-address-id="{{ $address['id'] }}">EDIT
                                                 </button>
                                                 <button type="button" class="btn-delete-address"
-                                                        data-address-id="{{ $address['id'] }}" {{ $address['is_default'] === 1 ? 'disabled' : '' }}>
+                                                        data-address-id="{{ $address['id'] }}" {{ $address['is_default'] == 1 ? 'disabled' : '' }}>
                                                     DELETE
                                                 </button>
                                             </div>
@@ -143,6 +143,7 @@
                             @endif
                         </div>
                         <div class="form-group">
+                            <label for="ward">Ward</label>
                             <label for="ward">Ward</label>
                             <input type="text" class="form-control" id="ward" name="ward" placeholder="Ward">
                             @if ($errors->has('ward'))
@@ -271,7 +272,7 @@
                     url: `/cart/checkout/${id}`,
                     data: {
                         '_method': 'DELETE',
-                        _token: '{{csrf_token()}}',
+                        _token: '{{  csrf_token() }}',
                         id: id
                     },
                     success: function () {

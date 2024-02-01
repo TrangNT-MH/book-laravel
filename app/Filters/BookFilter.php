@@ -8,7 +8,10 @@ class BookFilter
      */
     protected array $filters = [
         'is_active' => BookStatusFilter::class,
-        'key' => BookTitleFilter::class
+        'key' => BookTitleFilter::class,
+        'price' => BookPriceFilter::class,
+        'sort' => BookSortFilter::class,
+        'category' => BookCategoryFilter::class
     ];
 
     /**

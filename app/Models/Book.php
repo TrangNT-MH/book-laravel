@@ -30,7 +30,7 @@ class Book extends Model
         return $filter->apply($query);
     }
 
-    public function genre()
+    public function genres()
     {
         return $this->belongsToMany(Genre::class);
     }

@@ -74,6 +74,7 @@ Route::group(['middleware' => ['role:user|admin']], function () {
     Route::get('/book', [UserBookController::class, 'index'])->name('user.book.index');
     Route::get('/book/{id}', [UserBookController::class, 'addToCart'])->name('user.book.addToCart');
     Route::get('/book/detail/{id}', [UserBookController::class, 'detail'])->name('user.book.detail');
+//    Route::get('/{category}', [UserBookController::class, 'category'])->name('user.book.category');
     Route::get('/cart', [CartController::class, 'index'])->name('user.cart');
     Route::delete('/cart/delete/{id}', [CartController::class, 'delete'])->name('user.cart.delete');
     Route::put('/cart/update/{id}', [CartController::class, 'update'])->name('user.cart.update');
@@ -89,4 +90,3 @@ Route::group(['middleware' => ['role:user|admin']], function () {
     Route::get('/verify-email-change/{code}', [UserController::class, 'verifyEmailCode'])->name('user.verifyEmailCode');
     Route::post('/check-email-code', [UserController::class, 'checkEmailCode'])->name('user.checkEmailCode');
 });
-

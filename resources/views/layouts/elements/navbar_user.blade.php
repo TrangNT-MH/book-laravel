@@ -57,29 +57,29 @@
             <span class="icon-menu"></span>
         </button>
     </div>
-    @if(str_contains(Route::currentRouteName(), 'book') )
-        <div class="sub-header">
-            <ul class="navbar sub-navbar">
-                @foreach($allGenres as $category => $genres)
-                    <li class="nav-item dropdown d-none d-xl-inline-flex genre-dropdown">
-                        <span class="nav-link dropdown-toggle dropdown-toggle-category" id="CateDropdown" href="#"
-                              data-toggle="dropdown"
-                              aria-expanded="false">
-                            <span class="font-weight-normal"> {{$category}} </span>
-                        </span>
-                        <div class="dropdown-menu-category dropdown-menu navbar-dropdown"
-                             aria-labelledby="CateDropdown">
-                            @foreach($genres as $genre)
-                                <a href="{{ route('user.profile', auth()->user()->getAuthIdentifier()) }}"
-                                   class="dropdown-item">
-                                    {{ $genre }}
-                                </a>
-                            @endforeach
-                        </div>
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+{{--    @if(str_contains(Route::currentRouteName(), 'book') )--}}
+{{--        <div class="sub-header">--}}
+{{--            <ul class="navbar sub-navbar">--}}
+{{--                @foreach($allGenres as $category => $genres)--}}
+{{--                    <li class="nav-item dropdown d-none d-xl-inline-flex genre-dropdown">--}}
+{{--                        <a class="nav-link dropdown-toggle dropdown-toggle-category" id="CateDropdown" href="{{ route('user.book.category', $category) }}"--}}
+{{--                              data-toggle="dropdown"--}}
+{{--                              aria-expanded="false">--}}
+{{--                            <span class="font-weight-normal category-name"> {{ $category }} </span>--}}
+{{--                        </a>--}}
+{{--                        <div class="dropdown-menu-category dropdown-menu navbar-dropdown"--}}
+{{--                             aria-labelledby="CateDropdown">--}}
+{{--                            @foreach($genres as $genre)--}}
+{{--                                <a href="{{ route('user.book.category', $genre) }}"--}}
+{{--                                   class="dropdown-item">--}}
+{{--                                    {{ $genre }}--}}
+{{--                                </a>--}}
+{{--                            @endforeach--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
+{{--                @endforeach--}}
+{{--            </ul>--}}
+{{--        </div>--}}
+{{--    @endif--}}
 </nav>
 <!-- partial -->

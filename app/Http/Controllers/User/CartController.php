@@ -61,7 +61,9 @@ class CartController extends Controller
             "is_default" => $request->is_default ? 1 : 0
         ];
         try {
-            $this->addressRepository->updateDefault($id);
+            if ($request->is_default == 1) {
+                $this->addressRepository->updateDefault($id);
+            }
             Address::updateOrCreate($data);
         } catch (\Exception $e) {
             return $e->getMessage();
