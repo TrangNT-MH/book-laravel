@@ -6,13 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
+use App\Repositories\BookGenreRepository;
 use App\Repositories\BookRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\GenreRepository;
 use Exception;
+use http\Message;
 use Illuminate\Container\RewindableGenerator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -23,17 +26,19 @@ class BookController extends Controller
     protected BookRepository $bookRepository;
     protected CategoryRepository $categoryRepository;
     protected GenreRepository $genreRepository;
+    protected BookGenreRepository $bookGenreRepository;
 
-    public function __construct(BookRepository $bookRepository, CategoryRepository $categoryRepository, GenreRepository $genreRepository)
+
+    public function __construct()
     {
-        $this->bookRepository = $bookRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->genreRepository = $genreRepository;
+        $this->bookRepository = new BookRepository();
+        $this->categoryRepository = new CategoryRepository();
+        $this->genreRepository = new GenreRepository();
+        $this->bookGenreRepository = new BookGenreRepository();
     }
 
     public function index(Request $request)
     {
-
         $status = $request->get('is_active');
         $keys = $request->get('key');
         $perPage = $request->get('limit', 5);
@@ -81,15 +86,7 @@ class BookController extends Controller
 
     public function create()
     {
-        $categoryIDs = $this->categoryRepository->allID();
-
-        $allGenres = [];
-        foreach ($categoryIDs as $id) {
-            $allGenres[] = [
-                'category' => $this->categoryRepository->name($id),
-                'genres' =>   $this->genreRepository->genres($id)
-                ];
-        }
+        $allGenres = $this->categoryRepository->genres();
 
         return view('admin.book.store', compact('allGenres'));
     }
@@ -97,17 +94,43 @@ class BookController extends Controller
     public function store(AddBookRequest $request)
     {
         try {
-            $validatedData = $request->validated();
+            DB::beginTransaction();
+            $data = [
+                'isbn' => $request->isbn,
+                'title' => $request->title,
+                'authors' => $request->authors,
+                'price' => $request->price,
+                'description' => $request->description,
+                'publisher' => $request->publisher,
+                'page_count' => $request->page_count,
+                'publish_date' => $request->publish_date,
+                'language' => $request->language,
+                'image' => $request->image
+            ];
+
             $image = $request->file('image');
 
-            $validatedData['image'] = $this->getImage($image);
+            $data['image'] = $this->getImage($image);
 
-            $this->bookRepository->create($validatedData);
+            $id = $this->bookRepository->create($data);
+
+            $genres = $request->genres;
+
+            foreach($genres as $key => $genre_id)
+            {
+                $this->bookGenreRepository->create([
+                    'book_id' => $id,
+                    'genre_id' => $genre_id
+                ]);
+            }
+
+            DB::commit();
 
             return redirect()->route('admin.book.index');
         } catch (Exception $e) {
-            Storage::delete($validatedData['image']);
-            return Redirect::back()->with('error', 'Having an error when adding the book: ' . $e->getMessage());
+            Storage::delete($data['image']);
+            DB::rollBack();
+            return redirect()->back()->with("error", $e->getMessage());
         }
     }
 
@@ -115,19 +138,39 @@ class BookController extends Controller
     {
         $id = $request->id;
         $selectBook = $this->bookRepository->detail($id);
-        return view('admin.book.detail', compact('selectBook'));
+        $allGenres = $this->categoryRepository->genres();
+
+        $genresOfBook = $this->bookRepository->genres($id);
+        return view('admin.book.detail', compact('selectBook', 'allGenres', 'genresOfBook'));
     }
 
     public function edit(UpdateBookRequest $request)
     {
-        $validatedData = $request->validated();
+        $data = [
+            'isbn' => $request->isbn,
+            'title' => $request->title,
+            'authors' => $request->authors,
+            'price' => $request->price,
+            'description' => $request->description,
+            'publisher' => $request->publisher,
+            'page_count' => $request->page_count,
+            'publish_date' => $request->publish_date,
+            'language' => $request->language,
+            'image' => $request->image
+        ];
+
+        $genres = $request->geners;
 
         if (isset($validatedData['image'])) {
-            $validatedData['image'] = $this->getImage($request->file('image'));
+            $data['image'] = $this->getImage($request->file('image'));
         }
 
         try {
-            $selectBook = $this->bookRepository->update($request->id, $validatedData);
+            DB::beginTransaction();
+
+            $this->bookRepository->update($request->id, $data);
+
+
             return redirect()->route('admin.book.detail', $request->id);
         } catch (Exception $e) {
             Storage::delete($validatedData['image']);

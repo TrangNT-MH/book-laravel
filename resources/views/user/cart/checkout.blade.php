@@ -23,7 +23,6 @@
                                     = {{ $item->qty * $item->price }}$</h5>
                             </div>
                         </td>
-
                     </tr>
                 @endforeach
             </table>

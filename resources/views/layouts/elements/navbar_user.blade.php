@@ -30,13 +30,13 @@
             <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
                 <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown"
                    aria-expanded="false">
-                    <img class="img-xs rounded-circle ml-2" src="{{ asset('images/faces/face8.jpg') }}"
+                    <img class="img-xs rounded-circle ml-2" src="{{ asset('images/faces/default.png') }}"
                          alt="Profile image"> <span
                         class="font-weight-normal"> {{ auth()->user()->name }} </span></a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                     <div class="dropdown-header text-center">
-                        <img class="img-md rounded-circle" src="{{ asset('images/faces/face8.jpg') }}"
-                             alt="Profile image">
+                        <img class="img-md rounded-circle" src="{{ asset('images/faces/default.png') }}"
+                             alt="Profile image" style="max-width: 100px">
                         <p class="mb-1 mt-3">{{ auth()->user()->name }}</p>
                         <p class="font-weight-light text-muted mb-0">{{ auth()->user()->email }}</p>
                     </div>

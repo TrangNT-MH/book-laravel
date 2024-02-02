@@ -24,22 +24,12 @@ class BookRepository extends EloquentRepository
 
     public function create($data)
     {
-        return $this->model->create([
-            'isbn' => $data['isbn'],
-            'title' => $data['title'],
-            'authors' => $data['authors'],
-            'price' => $data['price'],
-            'description' => $data['description'],
-            'publisher' => $data['publisher'],
-            'page_count' => $data['page_count'],
-            'publish_date' => $data['publish_date'],
-            'language' => $data['language'],
-            'image' => $data['image']
-        ]);
+        $book = $this->model->create($data);
+        return $book->id;
     }
 
-    public function categories()
+    public function genres($id)
     {
-        return $this->model->with('genre')->pluck('genre')->get()->toArray();
+        return $this->model->find($id)->genres()->pluck('genres.id')->toArray();
     }
 }

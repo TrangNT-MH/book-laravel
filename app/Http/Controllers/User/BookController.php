@@ -8,6 +8,7 @@ use App\Models\Book;
 use App\Repositories\BookRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\GenreRepository;
+use Dflydev\DotAccessData\Data;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
@@ -31,6 +32,12 @@ class BookController extends Controller
 
         $allGenres = $this->cateRepository->genres();
         return view('user.book.index', compact('books', 'allGenres'));
+    }
+
+    public function filter(Request $request)
+    {
+        $url = request()->fullUrlWithQuery($request->except('_token'));
+        return redirect()->to($url);
     }
 
     public function addToCart(Request $request, $id)
@@ -59,14 +66,11 @@ class BookController extends Controller
     public function detail($id)
     {
         $book = $this->bookRepository->find($id);
-        if ($book->category !== 'none') {
-            $arrCate = explode(',', $book->category);
-        } else {
-            $arrCate = [];
-        }
+
+        $genres = $book->genres->toArray();
 
         $allGenres = $this->cateRepository->genres();
-        return view('user.book.detail', compact('book', 'arrCate', 'allGenres'));
+        return view('user.book.detail', compact('book', 'genres', 'allGenres'));
     }
 
 //    public function category(Request $request)

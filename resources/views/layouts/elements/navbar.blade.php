@@ -18,19 +18,19 @@
             <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
                 <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown"
                    aria-expanded="false">
-                    <img class="img-xs rounded-circle ml-2" src="{{ asset('images/faces/face8.jpg') }}" alt="Profile image"> <span
-                        class="font-weight-normal"> Henry Klein </span></a>
+                    <img class="img-xs rounded-circle ml-2" src="{{ asset('images/faces/default.png') }}" alt="Profile image"> <span
+                        class="font-weight-normal"> {{ auth()->user()->name }} </span></a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-                    <div class="dropdown-header text-center">
-                        <img class="img-md rounded-circle" src="{{ asset('images/faces/face8.jpg') }}" alt="Profile image">
-                        <p class="mb-1 mt-3">Allen Moreno</p>
-                        <p class="font-weight-light text-muted mb-0">allenmoreno@gmail.com</p>
+                    <div class="dropdown-header" style="display: flex; flex-direction: column; align-items: center;">
+                        <img class="img-md rounded-circle" src="{{ asset('images/faces/default.png') }}"
+                             alt="Profile image" style="max-width: 100px">
+                        <p class="mb-1 mt-3">{{ auth()->user()->name }}</p>
+                        <p class="font-weight-light text-muted mb-0">{{ auth()->user()->email }}    </p>
                     </div>
-                    <a class="dropdown-item"><i class="dropdown-item-icon icon-user text-primary"></i> My Profile <span
-                            class="badge badge-pill badge-danger">1</span></a>
-                    <a class="dropdown-item"><i class="dropdown-item-icon icon-speech text-primary"></i> Messages</a>
-                    <a class="dropdown-item"><i class="dropdown-item-icon icon-energy text-primary"></i> Activity</a>
-                    <a class="dropdown-item"><i class="dropdown-item-icon icon-question text-primary"></i> FAQ</a>
+                    <a class="dropdown-item"><i class="dropdown-item-icon icon-user text-primary"></i>My Profile</a>
+                    <a class="dropdown-item"><i class="dropdown-item-icon icon-speech text-primary"></i>Messages</a>
+                    <a class="dropdown-item"><i class="dropdown-item-icon icon-energy text-primary"></i>Activity</a>
+                    <a class="dropdown-item"><i class="dropdown-item-icon icon-question text-primary"></i>FAQ</a>
                     <a class="dropdown-item" href="{{ route('logout') }}"><i class="dropdown-item-icon icon-power text-primary"></i>Sign Out</a>
                 </div>
             </li>

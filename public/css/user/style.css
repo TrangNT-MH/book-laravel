@@ -205,6 +205,14 @@
     margin-right: 3px;
 }
 
+.two-column{
+    column-count: 2;
+}
+
+.category-filter .two-column:first-child {
+    margin: 0;
+}
+
 .view-cart {
     display: flex;
     justify-content: space-between;

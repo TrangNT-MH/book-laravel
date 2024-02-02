@@ -98,7 +98,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{ $allBooks->withQueryString()->links() }}
+                    {{ $allBooks->withQueryString()->links('user.custom-pagination') }}
                 </div>
             </div>
         </div>

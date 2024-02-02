@@ -18,9 +18,9 @@ class GenreRepository extends EloquentRepository
         return $this->model->with('books')->find($genre)->books->toArray();
     }
 
-    public function genres()
+    public function genres($id)
     {
-        return $this->model->with('categories')->get();
+        return $this->model->where('category_id', $id)->get()->toArray();
     }
 
     public function findId($genres)

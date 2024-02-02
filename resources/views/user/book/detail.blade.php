@@ -26,8 +26,8 @@
                             </div>
                             <div class="categories d-flex flex-column align-items-start">
                                 <h5 class="mt-2">Categories:</h5>
-                                @foreach($arrCate as $cate)
-                                    <span class="badge badge-primary p-1 m-1">{{ $cate}}</span>
+                                @foreach($genres as $key => $genre)
+                                    <span class="badge badge-primary p-1 m-1">{{ $genre['genres'] }}</span>
                                 @endforeach
                             </div>
                         </div>

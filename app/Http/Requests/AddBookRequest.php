@@ -27,10 +27,10 @@ class AddBookRequest extends FormRequest
             'title' => 'bail|required|string',
             'isbn' => 'bail|required|unique:books|regex:/([0-9X]{13}$)/',
             'authors' => 'bail|required|string',
-            'price' => 'bail|required|decimal:2',
+            'price' => 'bail|required|regex:/^-?[0-9]+(?:\.[0-9]{1,2})?$/',
             'description' => 'bail|required|string',
             'publisher' => 'bail|required|string',
-            'genres[]' => 'bail|required',
+            'genres' => 'required',
             'page_count' => 'bail|required|string',
             'publish_date' => 'bail|required',
             'language' => 'bail|required',
@@ -49,9 +49,9 @@ class AddBookRequest extends FormRequest
             'authors.required' => "The author field is required for the author's name.",
             'authors.string' => "The author must be a string for the author\'s name.",
             'price.required' => 'The price field is required for the book price.',
-            'price.decimal' => 'The price must be a decimal number with 2 digits for the book price.',
-            'publication_date.required' => 'The publication date field is required for the book publication date .',
-//            'image.image' => 'The image must be an image file.',
+            'price.regex' => 'The price must be a decimal number with max 2 digits for the book price.',
+            'publish_date.required' => 'The publication date field is required for the book publication date .',
+            'image.image' => 'The image must be an image file.',
         ];
     }
 }

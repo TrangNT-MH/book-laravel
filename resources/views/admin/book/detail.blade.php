@@ -134,22 +134,21 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label for="book-category" class="col-sm-3 col-form-label">Category</label>
+                                    <label class="col-sm-3 col-form-label">Category</label>
                                     <div class="col-sm-9">
-                                        {{--                                    @if($selectBook->category === 'none')--}}
-                                        {{--                                        <input readonly type="text" class="form-control" value="none" placeholder="No category">--}}
-                                        {{--                                    @else--}}
-                                        {{--                                        <input readonly type="text" class="form-control" id="book-category"--}}
-                                        {{--                                               value="{{$selectBook->category}}" name="category">--}}
-                                        {{--                                    @endif--}}
-                                        <input type="text" class="form-control book-category" id="book-pages"
-                                               name="category"
-                                               placeholder="Category"
-                                               value="{{ old('category', $selectBook->category) }}"
-                                               readonly>
-                                        @if($errors->has('category'))
-                                            <span class="text-danger">{{ $errors->first('category') }}</span>
-                                        @endif
+                                    <select class="js-example-basic-multiple select2-hidden-accessible" multiple="" name="genres[]"
+                                            style="width:100%" data-select2-id="4" tabindex="-1" aria-hidden="true" disabled>
+                                        @foreach($allGenres as $category => $genres)
+                                            <optgroup label="{{ $category }}">
+                                                @foreach($genres as $key => $value)
+                                                    <option value="{{ $value['id'] }}" {{ ((collect(old('genres'))->contains($value['id'])) || in_array($value['id'], $genresOfBook)) ? 'selected' : '' }}>{{ $value['genres'] }}</option>
+                                                @endforeach
+                                            </optgroup>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('genres'))
+                                        <span class="text-danger">{{ $errors->first('genres') }}</span>
+                                    @endif
                                     </div>
                                 </div>
                             </div>
@@ -261,6 +260,7 @@
             tinymce.activeEditor.mode.set("readonly");
             $('.btn-edit').on('click', function () {
                 $(':input').prop('readonly', false);
+                $('select[name = "genres[]"]').removeAttr('disabled')
                 $('#selectImg').prop('disabled', false);
                 $('.btn-update-book').removeClass('invisible')
                 tinymce.activeEditor.mode.set("design");

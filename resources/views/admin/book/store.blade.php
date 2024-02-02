@@ -2,6 +2,11 @@
 @section('content')
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="card-body">
                 <h4 class="card-title">Adding book form</h4>
                 <form action="{{ route('admin.book.store') }}" method="post" class="forms-add-book"
@@ -51,12 +56,12 @@
                         <label>Category</label>
                         <select class="js-example-basic-multiple select2-hidden-accessible" multiple="" name="genres[]"
                                 style="width:100%" data-select2-id="4" tabindex="-1" aria-hidden="true">
-                            @foreach($allGenres as $values)
-                                <optgroup label="{{ $values['category'] }}">
-                                    @foreach($values['genres'] as $value)
-                                        <option value="{{ $value }}" {{ (collect(old('genres'))->contains($value)) ? 'selected' : '' }}>{{ $value }}</option>
+                            @foreach($allGenres as $category => $genres)
+                                <optgroup label="{{ $category }}">
+                                    @foreach($genres as $key => $value)
+                                        @dd(in_array($value['id'], $genresOfBook))
+                                        <option value="{{ $value['id'] }}" {{ ((collect(old('genres'))->contains($value['id'])) ? 'selected' : '' }}>{{ $value['genres'] }}</option>
                                     @endforeach
-                                    <option></option>
                                 </optgroup>
                             @endforeach
                         </select>
@@ -115,7 +120,8 @@
                     <div class="form-group">
                         <label for="book-description">Description</label>
                         <div class="col-xs-12">
-                            <textarea class="tinymce-editor" id="book-description" name="description" rows="10" cols="100%">
+                            <textarea class="tinymce-editor" id="book-description" name="description" rows="10"
+                                      cols="100%">
                                 {{ old('description') }}
                             </textarea>
                             @if($errors->has('description'))

@@ -31,7 +31,7 @@ class CategoryRepository extends EloquentRepository
 
         foreach ($categoriesWithGenres as $category) {
             $categoryName = $category->category;
-            $genres = $category->genres->pluck('genres')->toArray();
+            $genres = $category->genres->toArray();
 
             $result[$categoryName] = $genres;
         }

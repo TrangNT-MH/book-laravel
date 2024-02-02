@@ -72,6 +72,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 
 Route::group(['middleware' => ['role:user|admin']], function () {
     Route::get('/book', [UserBookController::class, 'index'])->name('user.book.index');
+    Route::post('/book', [UserBookController::class, 'filter'])->name('user.book.filter');
     Route::get('/book/{id}', [UserBookController::class, 'addToCart'])->name('user.book.addToCart');
     Route::get('/book/detail/{id}', [UserBookController::class, 'detail'])->name('user.book.detail');
 //    Route::get('/{category}', [UserBookController::class, 'category'])->name('user.book.category');
